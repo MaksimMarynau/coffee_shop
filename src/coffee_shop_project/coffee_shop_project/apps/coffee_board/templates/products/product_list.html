@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}My Coffee Blog{% endblock %}
+
+{% block content %}
+    <h1>My Coffee Blog</h1>
+    {% for product in my_products %}
+        <ul>
+            <h2>
+              <a href="">{{ product.title }}</a>
+            </h2>
+            <li>{{ product.products_description.description }}</li>
+            <li>Available: {{ product.count }}</li>
+            <li>Price: {{ product.price }}$</li>
+            <li>Seller is: <i>{{ product.seller }}</i></li>
+            <li>Contact: {{ product.seller.phone }}</li>
+            <li>Posted: {{ product.publish }}</li>
+        </ul>
+    {% endfor %}
+
+{% endblock %}
