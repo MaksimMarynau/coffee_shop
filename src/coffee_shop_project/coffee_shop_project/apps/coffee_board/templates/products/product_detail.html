@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}My Coffee Blog{% endblock %}
+
+{% block content %}
+    <h1>My Coffee Blog</h1>
+        <ul>
+            <h2>
+              {{ product.title }}
+            </h2>
+            <li>{{ product.products_description.description }}</li>
+            <li>Available: {{ product.count }}</li>
+            <li>Price: {{ product.price }}$</li>
+            <li>Shipping from: {{ product.products_description.country }}</li>
+            <li>Seller is: <i>{{ product.seller }}</i></li>
+            <li>Contact: {{ product.seller.phone }}, {{ product.seller.address }}</li>
+            <li>Posted: {{ product.publish }}</li>
+            <img src="{{ product.products_description.image.url }}" width=200px height=auto/>
+        </ul>
+        <p>Comments: </p>
+        {% for comment in product.comments.all %}
+            <p>Name: {{ comment.name }}</p>
+            <p>Email: {{ comment.email }}</p>
+            <p>Text: {{ comment.body }}</p><hr />
+        {% endfor %}
+    <br />
+    <a href="{% url 'product_list' %}">Go back to the main page.</a>
+{% endblock %}

@@ -7,13 +7,8 @@
     {% for product in my_products %}
         <ul>
             <h2>
-              <a href="">{{ product.title }}</a>
+              <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
             </h2>
-            <li>{{ product.products_description.description }}</li>
-            <li>Available: {{ product.count }}</li>
-            <li>Price: {{ product.price }}$</li>
-            <li>Seller is: <i>{{ product.seller }}</i></li>
-            <li>Contact: {{ product.seller.phone }}</li>
             <li>Posted: {{ product.publish }}</li>
             <img src="{{ product.products_description.image.url }}" width=200px height=auto/>
         </ul>

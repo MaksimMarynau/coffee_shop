@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 # Register your models here.
-from .models import Product, ProductDescription, Seller
+from .models import Product, ProductDescription, Seller, Comment
 
 
 class DescriptionInline(admin.StackedInline):
@@ -35,6 +35,13 @@ class ProductDescriptionAdmin(admin.ModelAdmin):
 @admin.register(Seller)
 class SellerAdmin(admin.ModelAdmin):
     list_display = ('user','nickname','phone','address')
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name','email','product','created','active')
+    list_filter = ('active','created','updated')
+    search_fields = ('name','email','body')
 
 admin.site.site_title = "Coffee shop"
 admin.site.site_header = "Coffee shop"
