@@ -15,6 +15,7 @@
             <li>Seller is: <i>{{ product.seller }}</i></li>
             <li>Contact: {{ product.seller.phone }}</li>
             <li>Posted: {{ product.publish }}</li>
+            <img src="{{ product.products_description.image.url }}" width=200px height=auto/>
         </ul>
     {% endfor %}
 
