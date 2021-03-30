@@ -9,20 +9,28 @@
               {{ product.title }}
             </h2>
             <li>{{ product.products_description.description }}</li>
-            <li>Available: {{ product.count }}</li>
-            <li>Price: {{ product.price }}$</li>
-            <li>Shipping from: {{ product.products_description.country }}</li>
-            <li>Seller is: <i>{{ product.seller }}</i></li>
-            <li>Contact: {{ product.seller.phone }}, {{ product.seller.address }}</li>
-            <li>Posted: {{ product.publish }}</li>
+            <li><b>Available:</b> {{ product.count }}</li>
+            <li><b>Price:</b> {{ product.price }}$</li>
+            <li><b>Shipping from:</b> {{ product.products_description.country }}</li>
+            <li><b>Seller is:</b> <i>{{ product.seller }}</i></li>
+            <li><b>Contact:</b> {{ product.seller.phone }}, {{ product.seller.address }}</li>
+            <li><b>Posted:</b> {{ product.publish }}</li>
             <img src="{{ product.products_description.image.url }}" width=200px height=auto/>
         </ul>
-        <p>Comments: </p>
+        <h2>Comments: </h2>
         {% for comment in product.comments.all %}
-            <p>Name: {{ comment.name }}</p>
-            <p>Email: {{ comment.email }}</p>
-            <p>Text: {{ comment.body }}</p><hr />
+            <p><b>Name:</b> {{ comment.name }}</p>
+            <p><b>Email:</b> {{ comment.email }}</p>
+            <p><b>Text:</b> {{ comment.body }}</p><hr />
         {% endfor %}
     <br />
-    <a href="{% url 'product_list' %}">Go back to the main page.</a>
+    <div style="display:inline-block;">
+        <form action="{% url 'product_detail' product.slug %}" method="post">
+            <h2>Add a comment:</h2>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <label><input type="submit" value="Add comment"></label>
+        </form>
+    </div>
+    <p><a href="{% url 'product_list' %}">Go back to the main page.</a></p>
 {% endblock %}
