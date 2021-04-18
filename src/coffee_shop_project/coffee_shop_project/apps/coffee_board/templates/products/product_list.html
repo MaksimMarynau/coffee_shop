@@ -3,15 +3,17 @@
 {% block title %}My Coffee Blog{% endblock %}
 
 {% block content %}
-    <h1>My Coffee Blog</h1>
-    {% for product in my_products %}
-        <ul>
-            <h2>
-              <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
-            </h2>
-            <li>Posted: {{ product.publish }}</li>
-            <img src="{{ product.products_description.image.url }}" width=200px height=auto/>
-        </ul>
-    {% endfor %}
+    <div class="card">
+        {% for product in my_products %}
+            <ul>
+                <h2>
+                  <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                </h2>
+                <li>Posted: {{ product.publish }}</li>
+                <img src="{{ product.products_description.image.url }}" class="img1">
+            </ul>
+        {% endfor %}
+    </div>
+
     {% include "pagination.html" with page=page_obj %}
 {% endblock %}

@@ -2,17 +2,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}{% endblock %}</title>
     <link href="{% static "css/main.css" %}" rel="stylesheet">
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <div id="content">
-        {% block content %}
-        {% endblock %}
+<button onclick="topFunction()" id="myBtn" title="Go to top">Go to top</button>
+<div class="header">
+    <h2>More than coffee shop</h2>
+</div>
+<div class="row">
+    <div class="leftcolumn">
+        <div class="card">
+            <h2><a href="{% url 'product_list' %}">MAIN</a></h2>
+        </div>
+        <div class="card">
+            <h2><a href="#">ABOUT</a></h2>
+        </div>
+        <div class="card">
+            <h2><a href="#">CONTACT</a></h2>
+        </div>
     </div>
-    <div id="sidebar">
-        <h2>My blog</h2>
-        <p>This is my blog.</p>
+    <div class="middle">
+    {% block content %}
+
+    {% endblock content %}
     </div>
+    <div class="rightcolumn">
+        <div class="card">
+            <h2>My blog</h2>
+            <p>This is my blog.</p>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <h2>&copy; All rights reserved</h2>
+    <h3>Maksim Marynau</h3>
+    <h4>Contact, Email</h4>
+    <h5>Date now</h5>
+</div>
+
+<script src="{% static "js/script.js" %}"></script>
+
 </body>
 </html>

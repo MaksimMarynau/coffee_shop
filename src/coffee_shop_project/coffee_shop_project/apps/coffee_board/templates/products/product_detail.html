@@ -3,20 +3,16 @@
 {% block title %}My Coffee Blog{% endblock %}
 
 {% block content %}
-    <h1>My Coffee Blog</h1>
-        <ul>
-            <h2>
-              {{ product.title }}
-            </h2>
-            <li>{{ product.products_description.description }}</li>
-            <li><b>Available:</b> {{ product.count }}</li>
-            <li><b>Price:</b> {{ product.price }}$</li>
-            <li><b>Shipping from:</b> {{ product.products_description.country }}</li>
-            <li><b>Seller is:</b> <i>{{ product.seller }}</i></li>
-            <li><b>Contact:</b> {{ product.seller.phone }}, {{ product.seller.address }}</li>
-            <li><b>Posted:</b> {{ product.publish }}</li>
-            <img src="{{ product.products_description.image.url }}" width=200px height=auto/>
-        </ul>
+    <div class="card">
+        <h2>{{ product.title }}</h2>
+        <p>{{ product.products_description.description }}</p>
+        <li><b>Available:</b> {{ product.count }}</li>
+        <li><b>Price:</b> {{ product.price }}$</li>
+        <li><b>Shipping from:</b> {{ product.products_description.country }}</li>
+        <li><b>Seller is:</b> <i>{{ product.seller }}</i></li>
+        <li><b>Contact:</b> {{ product.seller.phone }}, {{ product.seller.address }}</li>
+        <li><b>Posted:</b> {{ product.publish }}</li>
+        <img src="{{ product.products_description.image.url }}" class="img2">
         <h2>Comments: </h2>
         {% for comment in product.comments.all %}
             <p><b>Name:</b> {{ comment.name }}</p>
@@ -32,5 +28,5 @@
             <label><input type="submit" value="Add comment"></label>
         </form>
     </div>
-    <p><a href="{% url 'product_list' %}">Go back to the main page.</a></p>
+    </div>
 {% endblock %}

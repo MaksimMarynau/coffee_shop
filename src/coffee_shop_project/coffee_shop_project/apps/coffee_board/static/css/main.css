@@ -1,92 +1,97 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
-    margin:0;
-    padding:0;
-    font-family:helvetica, sans-serif;
+    font-family: Arial;
+    padding: 20px;
+    background: #D5C6D0;
 }
 
-a {
-    color:#00abff;
-    text-decoration:none;
+li {
+    list-style-type: " - ";
 }
 
-h1 {
-    font-weight:normal;
-    border-bottom:1px solid #bbb;
-    padding:0 0 10px 0;
+.header {
+    padding: 30px;
+    font-size: 40px;
+    text-align: center;
+    background: #C5C6D0;
 }
 
-h2 {
-    font-weight:normal;
-    margin:30px 0 0;
+.leftcolumn {
+    float: left;
+    width: 25%;
 }
 
-#content {
-    float:left;
-    width:60%;
-    padding:0 0 0 30px;
+.middle {
+    float: left;
+    width: 50%;
+    padding-left: 20px;
 }
 
-#sidebar {
-    float:right;
-    width:30%;
-    padding:10px;
-    background:#efefef;
-    height:100%;
+.rightcolumn {
+    float: left;
+    width: 25%;
+    padding-left: 20px;
 }
 
-p.date {
-    color:#ccc;
-    font-family: georgia, serif;
-    font-size: 12px;
-    font-style: italic;
+.img1 {
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    padding: 20px;
 }
 
-/* pagination */
-.pagination {
-    margin:40px 0;
-    font-weight:bold;
+.img2 {
+    width: 50%;
+    height: auto;
+    padding: 20px;
 }
 
-/* forms */
-label {
-    float:left;
-    clear:both;
-    color:#333;
-    margin-bottom:4px;
-}
-input, textarea {
-    clear:both;
-    float:left;
-    margin:0 0 10px;
-    background:#ededed;
-    border:0;
-    padding:6px 10px;
-    font-size:12px;
-}
-input[type=submit] {
-    font-weight:bold;
-    background:#00abff;
-    color:#fff;
-    padding:10px 20px;
-    font-size:14px;
-    text-transform:uppercase;
-}
-.errorlist {
-    color:#cc0033;
-    float:left;
-    clear:both;
-    padding-left:10px;
+.card {
+    background-color: #C5C6D0;
+    padding: 20px;
+    margin-top: 20px;
 }
 
-/* comments */
-.comment {
-    padding:10px;
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
 }
-.comment:nth-child(even) {
-    background:#efefef;
+
+.footer {
+    padding: 20px;
+    background: #C5C6D0;
+    margin-top: 20px;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
 }
-.comment .info {
-    font-weight:bold;
-    font-size:12px;
-    color:#666;
+
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    border: none;/ outline: none;
+    background-color: #C5C6EF;
+    color: black;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+#myBtn:hover {
+    background-color: #555;
+}
+
+@media screen and (max-width: 800px) {
+    .leftcolumn, .middle, .rightcolumn {
+        width: 100%;
+        padding: 0;
+    }
 }
