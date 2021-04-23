@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
-
+from django.core.paginator import Paginator
 
 # Create your views here.
 from .models import Product, Comment
@@ -10,8 +10,8 @@ from .forms import CommentForm
 class ProductView(ListView):
     model = Product
     queryset = Product.objects.filter(status='published').order_by('-publish')
-    paginate_by = 2
     template_name = 'products/product_list.html'
+    paginate_by = 2
     context_object_name = 'my_products'
 
 
@@ -38,3 +38,10 @@ class ProductDetailView(DetailView):
             'form':form,
             'product':product,
             })
+
+
+def aboutView(request):
+    return render(request, 'products/about.html')
+
+def contactView(request):
+    return render(request, 'products/contact.html')
