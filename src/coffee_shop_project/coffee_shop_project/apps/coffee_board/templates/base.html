@@ -1,5 +1,4 @@
 {% load static %}
-{% load custom_tags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,51 +7,24 @@
 </head>
 <body>
 <button onclick="topFunction()" id="myBtn" title="Go to top">Go to top</button>
-<div class=transparent1>
-    <div class = "header">
-        <h2>More than a coffee shop</h2>
-    </div>
-</div>
+
+{% include "include/header.html" %}
+
 <div class="row">
-    <div class="leftcolumn">
-        <div class="transparent1">
-            <div class="card">
-                <h2 class="updated"><a href="{% url 'product_list' %}">MAIN</a></h2>
-            </div>
-        </div>
-        <div class="transparent1">
-            <div class="card">
-                <h2 class="updated"><a href="{% url 'about' %}">ABOUT</a></h2>
-            </div>
-        </div>
-        <div class="transparent1">
-            <div class="card">
-                <h2 class="updated"><a href="{% url 'contact' %}">CONTACT</a></h2>
-            </div>
-        </div>
-    </div>
+
+    {% include "include/leftbar.html" %}
+
     <div class="middle">
     {% block content %}
 
     {% endblock content %}
     </div>
-    <div class="rightcolumn">
-        <div class="transparent1">
-            <div class="card">
-                <h2>My blog</h2>
-                <p>This is my blog.</p>
-            </div>
-        </div>
-    </div>
+
+    {% include "include/rightbar.html" %}
+
 </div>
-<div class=transparent1>
-    <div class="footer">
-        <h2>&copy; All rights reserved</h2>
-        <h3>Maksim Marynau</h3>
-        <h4>Email: <a href="#">maksim.marynau@gmail.com</a></h4>
-        <h5>{% date_now %}</h5>
-    </div>
-</div>
+
+{% include "include/footer.html" %}
 
 <script src="{% static "js/script.js" %}"></script>
 

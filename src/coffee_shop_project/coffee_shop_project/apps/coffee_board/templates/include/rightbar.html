@@ -1,0 +1,17 @@
+<div class="rightcolumn">
+    <div class="transparent1">
+        <div class="card">
+            <h2>My blog</h2>
+            <p>This is my blog.</p>
+        {% if user.is_authenticated %}
+            <span><em>{{ user.username }}</em></span>
+            <a href="{% url 'account_logout' %}">Sign out </a>
+            <br>
+        {% else %}
+            <a href="{% url 'account_login' %}">Sign in </a>
+            <br>
+            <a href="{% url 'account_signup' %}">Registration </a>
+        {% endif %}
+        </div>
+    </div>
+</div>
