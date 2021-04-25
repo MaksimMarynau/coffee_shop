@@ -11,7 +11,7 @@
                   <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
                 </h2>
                 <p>
-                    Posted: {{ product.publish }}
+                    Posted: {{ product.publish }} by {{ product.seller }}
                 </p>
                 <img src="{{ product.products_description.image.url }}" class="img1">
             </div>

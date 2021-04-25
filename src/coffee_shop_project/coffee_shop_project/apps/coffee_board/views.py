@@ -7,13 +7,14 @@ from django.core.paginator import Paginator
 from .models import Product, Comment
 from .forms import CommentForm
 
+
 class ProductView(ListView):
     model = Product
     queryset = Product.objects.filter(status='published').order_by('-publish')
     template_name = 'products/product_list.html'
     paginate_by = 2
     context_object_name = 'my_products'
-
+    
 
 class ProductDetailView(DetailView):
     model = Product
@@ -38,7 +39,6 @@ class ProductDetailView(DetailView):
             'form':form,
             'product':product,
             })
-
 
 def aboutView(request):
     return render(request, 'products/about.html')
