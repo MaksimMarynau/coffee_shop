@@ -54,6 +54,17 @@ class ProductDescription(models.Model):
     def __str__(self):
         return self.product.title
 
+class ProductImages(models.Model):
+
+	title = models.CharField("Title", max_length=100)
+	description = models.TextField("Description")
+	image = models.ImageField("Image", upload_to="products/additional/")
+	product = models.ForeignKey(Product, verbose_name='Product', on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.title
+
+
 class Seller(models.Model):
 
     user = models.OneToOneField(

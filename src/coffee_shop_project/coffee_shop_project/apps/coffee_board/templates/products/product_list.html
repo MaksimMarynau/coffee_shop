@@ -13,7 +13,12 @@
                 <p>
                     Posted: {{ product.publish }} by {{ product.seller }}
                 </p>
+                <p class="img_view">
                 <img src="{{ product.products_description.image.url }}" class="img1">
+                {% for image in product.productimages_set.all %}
+                    <img src="{{ image.image.url }}" class="img1" alt="{{ image.description }}">
+                {% endfor %}
+                </p>
             </div>
         </div>
         {% endfor %}

@@ -13,17 +13,26 @@
             <li><b>Seller is:</b> <i>{{ product.seller }}</i></li>
             <li><b>Contact:</b> {{ product.seller.phone }}, {{ product.seller.address }}</li>
             <li><b>Posted:</b> {{ product.publish }}</li>
-            <img src="{{ product.products_description.image.url }}" class="img2">
+            <p class="img_view">
+                <img src="{{ product.products_description.image.url }}" class="img2">
+                {% for image in product.productimages_set.all %}
+                    <img src="{{ image.image.url }}" class="img2" alt="{{ image.description }}">
+                {% endfor %}
+            </p>
+
             <h2>Comments: </h2>
+            <hr />
             {% for comment in product.comments.all %}
                 <p>Comment {{ forloop.counter }} by {{ comment.name }}
                     {{ comment.created }}
                 </p>
                 {{ comment.body|linebreaks }}
+                <hr />
             {% empty %}
                 <p>
                     There are no comments yet.
                 </p>
+                <hr />
             {% endfor %}
 
         <br />

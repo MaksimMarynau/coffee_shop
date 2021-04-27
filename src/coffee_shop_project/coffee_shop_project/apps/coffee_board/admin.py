@@ -1,18 +1,29 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 # Register your models here.
-from .models import Product, ProductDescription, Seller, Comment
+from .models import Product, ProductDescription, Seller, Comment, ProductImages
 
 
 class DescriptionInline(admin.StackedInline):
     model = ProductDescription
+
+class ProductImagesInline(admin.StackedInline):
+	model = ProductImages
+	extra = 1
+	readonly_fields = ('get_image',)
+
+	def get_image(self,obj):
+		return mark_safe(f'<img src={obj.image.url} width="100" height="auto"')
+
+	get_image.short_description = 'Image'
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('title','count','price','publish','status')
     list_filter = ('title', 'created','publish', 'seller')
     search_fields = ('title','seller')
-    inlines = [DescriptionInline,]
+    inlines = [DescriptionInline,ProductImagesInline]
     prepopulated_fields = {'slug':('title',)}
     # raw_id_fields = ('seller',)
     date_hierarchy = 'publish'
@@ -30,6 +41,16 @@ class ProductDescriptionAdmin(admin.ModelAdmin):
         return format_html('<img src="{}" width="100", height=auto />'.format(obj.image.url))
 
     image_tag.short_description = 'Image'
+
+@admin.register(ProductImages)
+class ProductImagesAdmin(admin.ModelAdmin):
+	list_display = ('title','product','get_image')
+	readonly_fields = ('get_image',)
+
+	def get_image(self,obj):
+		return mark_safe(f'<img src={obj.image.url} width="80" height="auto"')
+
+	get_image.short_description = 'Images'
 
 
 @admin.register(Seller)
