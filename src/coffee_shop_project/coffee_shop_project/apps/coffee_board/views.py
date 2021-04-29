@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
 
 # Create your views here.
 from .models import Product, Comment
@@ -15,8 +18,16 @@ class ProductView(ListView):
     paginate_by = 5
     context_object_name = 'my_products'
 
+class ProtectedView(TemplateView):
+    template_name = 'products/product_detail.html'
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+@method_decorator(login_required, name='dispatch')
 class ProductDetailView(DetailView):
+    login_required = True
     model = Product
     slug_field = 'slug'
     template_name = 'products/product_detail.html'

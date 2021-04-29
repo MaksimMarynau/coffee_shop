@@ -137,14 +137,22 @@ SITE_ID = 1
 
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_USERNAME_MIN_LENGTH = 4
+ACCOUNT_EMAIL_REQUIRED = True
 LOGIN_REDIRECT_URL = '/'
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_REQUIRED = True
+# if DEBUG:
+#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-# ACCOUNT_EMAIL_REQUIRED = True
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
-#
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = str(os.getenv('GMAIL_NAME'))
+EMAIL_HOST_PASSWORD = str(os.getenv('GMAIL_PASS'))
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 AUTHENTICATION_BACKEND = {
     'allauth.account.auth_backends.AuthenticationBackend',
