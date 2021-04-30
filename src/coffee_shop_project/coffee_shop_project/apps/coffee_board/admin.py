@@ -2,8 +2,13 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 # Register your models here.
-from .models import Product, ProductDescription, Seller, Comment, ProductImages
-
+from .models import (
+    Product,
+    ProductDescription,
+    Seller,
+    Comment,
+    ProductImages,
+)
 
 class DescriptionInline(admin.StackedInline):
     model = ProductDescription
@@ -20,7 +25,8 @@ class ProductImagesInline(admin.StackedInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title','count','price','publish','status')
+    readonly_fields = ['id']
+    list_display = ('title','tags','count','price','publish','status')
     list_filter = ('title', 'created','publish', 'seller')
     search_fields = ('title','seller')
     inlines = [DescriptionInline,ProductImagesInline]

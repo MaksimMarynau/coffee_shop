@@ -25,6 +25,18 @@
                 <li><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></li>
             {% endfor %}
             </ul>
+            <h3>All tags:</h3>
+            <ul>
+            {% for tag in tags %}
+                <li>
+                    <a href="{% url 'tagged' tag.slug %}">{{ tag.name }}</a>
+                    ({{ tag.count_tags }})
+                </li>
+            {% empty %}
+                No tags
+            {% endfor %}
+            </ul>
+
         </div>
     </div>
 </div>

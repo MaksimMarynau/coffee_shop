@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.conf import settings
 from phone_field import PhoneField
 from django.urls import reverse
+from taggit.managers import TaggableManager
+
 
 # Create your models here.
 class Product(models.Model):
@@ -28,6 +30,7 @@ class Product(models.Model):
         on_delete=models.CASCADE,
         related_name='products'
     )
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title

@@ -10,8 +10,13 @@
                 <h2 class='updated'>
                   <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
                 </h2>
-                <p>
-                    Posted: {{ product.publish }} by {{ product.seller }}
+                <p>Posted: {{ product.publish }} by {{ product.seller }}</p>
+                <p>Tags:
+                {% for tag in product.tags.all %}
+                    <a href="{% url 'tagged' tag.slug %}">{{ tag.name }}</a>
+                {% empty %}
+                    No tags
+                {% endfor %}
                 </p>
                 <p class="img_view">
                 <img src="{{ product.products_description.image.url }}" class="img1">

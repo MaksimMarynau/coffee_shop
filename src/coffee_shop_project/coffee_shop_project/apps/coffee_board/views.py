@@ -5,18 +5,33 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
-
+from taggit.models import Tag
+from django.db.models import Count
 # Create your views here.
 from .models import Product, Comment
 from .forms import CommentForm
 
+class TagMixin(object):
+    def get_context_data(self, **kwargs):
+        context = super(TagMixin, self).get_context_data(**kwargs)
+        context['tags'] = Tag.objects.all().order_by('name').annotate(count_tags=Count('taggit_taggeditem_items'))
+        return context
 
-class ProductView(ListView):
+class ProductView(TagMixin,ListView):
     model = Product
     queryset = Product.objects.filter(status='published').order_by('-publish')
     template_name = 'products/product_list.html'
     paginate_by = 5
     context_object_name = 'my_products'
+
+class TagIndexView(TagMixin,ListView):
+    model = Product
+    template_name = 'products/product_list.html'
+    paginate_by = 5
+    context_object_name = 'my_products'
+
+    def get_queryset(self,tag_slug=None):
+        return Product.objects.filter(tags__slug=self.kwargs.get('slug'))
 
 class ProtectedView(TemplateView):
     template_name = 'products/product_detail.html'

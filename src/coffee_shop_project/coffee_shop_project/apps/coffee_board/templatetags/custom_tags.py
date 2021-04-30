@@ -1,6 +1,7 @@
 from django import template
 from datetime import date
 from django.db.models import Count
+from taggit.models import Tag
 
 from ..models import Product
 

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'phone_field',
     'allauth',
     'allauth.account',
+    'taggit',
 ]
 
 MIDDLEWARE = [
