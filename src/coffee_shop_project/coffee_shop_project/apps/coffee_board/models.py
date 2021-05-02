@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
-from phone_field import PhoneField
+from phonenumber_field.modelfields import PhoneNumberField
 from django.urls import reverse
 from taggit.managers import TaggableManager
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Product(models.Model):
@@ -71,16 +71,16 @@ class ProductImages(models.Model):
 class Seller(models.Model):
 
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
+        User,
         on_delete=models.CASCADE,
+        unique= True,
         related_name='sellers'
     )
-    nickname = models.CharField(max_length=100,unique=True)
-    phone = PhoneField(blank=True, help_text='Contact phone number')
+    phone = PhoneNumberField(null=False, blank=False, unique=True)
     address = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
-        return self.nickname
+        return self.user.username
 
 
 class Comment(models.Model):

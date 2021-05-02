@@ -10,7 +10,7 @@
                 <h2 class='updated'>
                   <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
                 </h2>
-                <p>Posted: {{ product.publish }} by {{ product.seller }}</p>
+                <p>Posted: {{ product.publish }} by {{ product.seller.user }}</p>
                 <p>Tags:
                 {% for tag in product.tags.all %}
                     <a href="{% url 'tagged' tag.slug %}">{{ tag.name }}</a>

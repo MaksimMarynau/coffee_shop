@@ -53,6 +53,8 @@ class ProductDetailView(DetailView):
         new_comment = None
         if form.is_valid():
             new_comment = form.save(commit=False)
+            new_comment.name = self.request.user
+            new_comment.email = self.request.user.email
             new_comment.product = product
             new_comment.save()
         return redirect(product.get_absolute_url())

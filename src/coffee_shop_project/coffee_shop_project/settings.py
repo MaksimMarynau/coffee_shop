@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'coffee_board',
-    'phone_field',
+    'phonenumber_field',
     'allauth',
     'allauth.account',
     'taggit',
@@ -143,6 +143,9 @@ LOGIN_REDIRECT_URL = '/'
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_FORMS = {'signup': 'coffee_board.forms.RegistrationForm'}
+# ACCOUNT_SIGNUP_FORM_CLASS = "coffee_board.forms.RegistrationForm"
 # if DEBUG:
 #     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

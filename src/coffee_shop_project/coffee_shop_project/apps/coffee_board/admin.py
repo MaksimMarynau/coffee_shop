@@ -61,7 +61,7 @@ class ProductImagesAdmin(admin.ModelAdmin):
 
 @admin.register(Seller)
 class SellerAdmin(admin.ModelAdmin):
-    list_display = ('user','nickname','phone','address')
+    list_display = ('user','phone','address')
 
 
 @admin.register(Comment)

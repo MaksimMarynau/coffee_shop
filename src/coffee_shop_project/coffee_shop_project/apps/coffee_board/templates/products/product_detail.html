@@ -10,7 +10,7 @@
             <li><b>Available:</b> {{ product.count }}</li>
             <li><b>Price:</b> {{ product.price }}$</li>
             <li><b>Shipping from:</b> {{ product.products_description.country }}</li>
-            <li><b>Seller is:</b> <i>{{ product.seller }}</i></li>
+            <li><b>Seller is:</b> <i>{{ product.seller.user }}</i></li>
             <li><b>Contact:</b> {{ product.seller.phone }}, {{ product.seller.address }}</li>
             <li><b>Posted:</b> {{ product.publish }}</li>
             <p class="img_view">
@@ -23,8 +23,10 @@
             <h2>Comments: </h2>
             <hr />
             {% for comment in product.comments.all %}
-                <p>Comment {{ forloop.counter }} by {{ comment.name }}
+                <p>Comment {{ forloop.counter }} by <u>{{ comment.name }}</u> on
                     {{ comment.created }}
+                    <br />
+                    Contact: {{ comment.email }}
                 </p>
                 {{ comment.body|linebreaks }}
                 <hr />
