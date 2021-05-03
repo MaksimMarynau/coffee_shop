@@ -7,9 +7,13 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from taggit.models import Tag
 from django.db.models import Count
+from django.contrib.auth import login, authenticate
+from django.db import transaction
+from django.contrib import messages
 # Create your views here.
 from .models import Product, Comment
-from .forms import CommentForm
+from .forms import CommentForm, RegistrationForm, SellerForm
+
 
 class TagMixin(object):
     def get_context_data(self, **kwargs):
@@ -73,3 +77,21 @@ def aboutView(request):
 
 def contactView(request):
     return render(request, 'products/contact.html')
+
+@login_required
+@transaction.atomic
+def update_profile(request):
+    if request.method == 'POST':
+        seller_form = SellerForm(request.POST, instance=request.user.sellers)
+        seller_form.user = request.user
+        if seller_form.is_valid():
+            seller_form.save()
+            messages.success(request, ('Your profile was successfully updated!'))
+            return redirect('/')
+        else:
+            messages.error(request, ('Please correct the error below.'))
+    else:
+        seller_form = SellerForm(instance=request.user.sellers)
+    return render(request, 'account/update_profile.html', {
+        'seller_form': seller_form,
+    })

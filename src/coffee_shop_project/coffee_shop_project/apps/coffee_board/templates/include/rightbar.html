@@ -4,7 +4,8 @@
         <div class="card">
             <h2>My blog</h2>
             {% if user.is_authenticated %}
-                <span><em>{{ user.username }}</em></span>
+                <span><em>Hello, {{ user.username }}!</em></span><br />
+                <a href="{% url 'update_profile' %}">Update profile </a><br />
                 <a href="{% url 'account_logout' %}">Sign out </a>
                 <br>
             {% else %}
