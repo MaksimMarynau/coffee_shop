@@ -24,6 +24,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('accounts/update_profile', views.update_profile, name='update_profile' ),
+    path('accounts/add_product', views.add_product, name='add_product' ),
+    path('accounts/update_product/<slug:slug>/',
+        views.update_product,
+        name='update_product'
+    ),
+    path('accounts/user_products', views.user_products, name='user_products'),
     path('', include('coffee_board.urls')),
 ]
 

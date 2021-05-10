@@ -6,6 +6,8 @@
             {% if user.is_authenticated %}
                 <span><em>Hello, {{ user.username }}!</em></span><br />
                 <a href="{% url 'update_profile' %}">Update profile </a><br />
+                <a href="{% url 'add_product' %}">Add product </a><br />
+                <a href="{% url 'user_products' %}">Your products </a><br />
                 <a href="{% url 'account_logout' %}">Sign out </a>
                 <br>
             {% else %}
@@ -24,17 +26,6 @@
             <ul>
             {% for product in most_commented_posts %}
                 <li><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></li>
-            {% endfor %}
-            </ul>
-            <h3>All tags:</h3>
-            <ul>
-            {% for tag in tags %}
-                <li>
-                    <a href="{% url 'tagged' tag.slug %}">{{ tag.name }}</a>
-                    ({{ tag.count_tags }})
-                </li>
-            {% empty %}
-                No tags
             {% endfor %}
             </ul>
 

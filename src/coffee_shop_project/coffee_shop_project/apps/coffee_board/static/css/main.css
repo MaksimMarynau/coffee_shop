@@ -108,6 +108,19 @@ p.img_view {
     margin-top: 20px;
 }
 
+.cardtrans{
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 15px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.cardmult {
+    color: white;
+    padding: 5px;
+    margin: 5px;
+}
+
 .row:after {
     content: "";
     display: table;
@@ -126,6 +139,11 @@ p.img_view {
 
 .pagination {
   display: inline-block;
+  color: white;
+}
+
+ul#menu li {
+  display: inline;
   color: white;
 }
 

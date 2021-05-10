@@ -4,14 +4,10 @@ from django.utils.safestring import mark_safe
 # Register your models here.
 from .models import (
     Product,
-    ProductDescription,
     Seller,
     Comment,
     ProductImages,
 )
-
-class DescriptionInline(admin.StackedInline):
-    model = ProductDescription
 
 class ProductImagesInline(admin.StackedInline):
 	model = ProductImages
@@ -26,22 +22,19 @@ class ProductImagesInline(admin.StackedInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ['id']
-    list_display = ('title','tags','count','price','publish','status')
+    list_display = ('seller','title','count','price','description',
+        'country','publish','draft'
+    )
     list_filter = ('title', 'created','publish', 'seller')
     search_fields = ('title','seller')
-    inlines = [DescriptionInline,ProductImagesInline]
+    readonly_fields = ['image_tag']
+    inlines = [ProductImagesInline]
     prepopulated_fields = {'slug':('title',)}
     # raw_id_fields = ('seller',)
     date_hierarchy = 'publish'
-    ordering = ('status', 'publish')
+    ordering = ('draft', 'publish')
     save_on_top = True
     save_as = True
-
-
-@admin.register(ProductDescription)
-class ProductDescriptionAdmin(admin.ModelAdmin):
-    list_display = ('product','country','image_tag')
-    readonly_fields = ['image_tag']
 
     def image_tag(self, obj):
         return format_html('<img src="{}" width="100", height=auto />'.format(obj.image.url))

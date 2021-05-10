@@ -1,0 +1,20 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Add product" %}{% endblock %}
+
+{% block content %}
+<div class="transparent1">
+    <div class="card">
+        <h1>{% trans "Add product" %}</h1>
+        <form method="post" action="{% url 'add_product' %}"
+        enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ product_form.as_p }}
+          <button type="submit">{% trans 'Add product' %}</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

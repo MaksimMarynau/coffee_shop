@@ -14,11 +14,11 @@ def date_now():
 
 @register.simple_tag
 def total_posts():
-    return Product.objects.count()
+    return Product.objects.filter(draft=False).count()
 
 @register.inclusion_tag('include/latest_posts.html')
 def show_latest_posts(count=5):
-    latest_posts = Product.objects.order_by('-publish')[:count]
+    latest_posts = Product.objects.filter(draft=False).order_by('-publish')[:count]
     return {'latest_posts': latest_posts}
 
 @register.simple_tag

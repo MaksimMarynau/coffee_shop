@@ -1,29 +1,36 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from taggit.models import Tag
 from django.db.models import Count
 from django.contrib.auth import login, authenticate
-from django.db import transaction
 from django.contrib import messages
+import re
 # Create your views here.
-from .models import Product, Comment
-from .forms import CommentForm, RegistrationForm, SellerForm
+from .models import Product, Comment, Seller
+from .forms import (
+    CommentForm,
+    RegistrationForm,
+    SellerForm,
+    ProductForm,
+    ProductImagesForm,
+)
 
 
 class TagMixin(object):
     def get_context_data(self, **kwargs):
         context = super(TagMixin, self).get_context_data(**kwargs)
-        context['tags'] = Tag.objects.all().order_by('name').annotate(count_tags=Count('taggit_taggeditem_items'))
+        context['tags'] = Tag.objects.order_by('name').annotate(count_tags=Count('taggit_taggeditem_items'))
         return context
 
 class ProductView(TagMixin,ListView):
     model = Product
-    queryset = Product.objects.filter(status='published').order_by('-publish')
+    queryset = Product.objects.filter(draft=False).order_by('-publish')
     template_name = 'products/product_list.html'
     paginate_by = 5
     context_object_name = 'my_products'
@@ -45,7 +52,7 @@ class ProtectedView(TemplateView):
         return super().dispatch(*args, **kwargs)
 
 @method_decorator(login_required, name='dispatch')
-class ProductDetailView(DetailView):
+class ProductDetailView(TagMixin,DetailView):
     login_required = True
     model = Product
     slug_field = 'slug'
@@ -54,7 +61,6 @@ class ProductDetailView(DetailView):
     def post(self, request, slug):
         form = CommentForm(request.POST)
         product = Product.objects.get(slug=slug)
-        new_comment = None
         if form.is_valid():
             new_comment = form.save(commit=False)
             new_comment.name = self.request.user
@@ -65,7 +71,7 @@ class ProductDetailView(DetailView):
 
     def get(self, request, slug):
         form = CommentForm()
-        product = Product.objects.get(slug=slug)
+        product = Product.objects.filter(draft=False).get(slug=slug)
         return render(request, 'products/product_detail.html',
             {
             'form':form,
@@ -78,8 +84,32 @@ def aboutView(request):
 def contactView(request):
     return render(request, 'products/contact.html')
 
+def tagsView(request):
+    tags = Tag.objects.order_by('name').annotate(
+        count_tags=Count('taggit_taggeditem_items')
+    )
+    return render(request, 'products/tags.html', {'tags':tags})
+
 @login_required
-@transaction.atomic
+def user_products(request):
+    product_list = Product.objects.filter(seller=request.user.sellers)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(product_list, 2)
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+
+    return render(
+        request,
+        'account/user_products.html',
+        {'products':products}
+    )
+
+@login_required
 def update_profile(request):
     if request.method == 'POST':
         seller_form = SellerForm(request.POST, instance=request.user.sellers)
@@ -94,4 +124,41 @@ def update_profile(request):
         seller_form = SellerForm(instance=request.user.sellers)
     return render(request, 'account/update_profile.html', {
         'seller_form': seller_form,
+    })
+
+
+@login_required
+def add_product(request):
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES)
+        if product_form.is_valid():
+            product = product_form.save(commit=False)
+            product.seller = request.user.sellers
+            product.slug = '_'.join(re.findall(r'\w+',product.title)).lower()
+            product.save()
+            product_form.save_m2m()
+            return redirect('/')
+    else:
+        product_form = ProductForm()
+    return render(request, 'account/add_product.html', {
+        'product_form': product_form,
+    })
+
+@login_required
+def update_product(request,slug=None):
+    product = get_object_or_404(Product, slug=slug)
+    if request.method == 'POST':
+        product_form = ProductForm(
+            request.POST,
+            request.FILES,
+            instance=product
+        )
+        if product_form.is_valid():
+            product_form.save()
+        return redirect(product.get_absolute_url())
+    else:
+        product_form = ProductForm(instance=product)
+    return render(request, 'account/update_product.html', {
+        'product_form': product_form,
+        'product': product,
     })

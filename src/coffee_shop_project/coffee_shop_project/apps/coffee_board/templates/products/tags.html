@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}My Coffee Blog{% endblock %}
+
+{% block content %}
+
+
+{% for tag in tags %}
+<div class="cardtrans">
+    <div class="cardmult">
+        <a href="{% url 'tagged' tag.slug  %}">{{ tag.name }}</a>
+        ({{ tag.count_tags }})
+    </div>
+</div>
+{% empty %}
+<div class="cardtrans">
+    <div class="cardmult">
+    No tags
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

@@ -9,67 +9,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django import forms
 # Create your models here.
-class Product(models.Model):
-
-    STATUS_CHOICES = (
-        ('draft', 'Draft'),
-        ('published', 'Published'),
-    )
-    title = models.CharField('Product title', max_length=100, unique=True,)
-    count = models.IntegerField(default=0,)
-    price = models.DecimalField(default=0, max_digits=6, decimal_places=2)
-    slug = models.SlugField(max_length=255, unique_for_date='publish')
-    publish = models.DateTimeField(default=timezone.now)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(
-        max_length=10,
-        choices=STATUS_CHOICES,
-        default='draft',
-    )
-    seller = models.ForeignKey(
-        'Seller',
-        on_delete=models.CASCADE,
-        related_name='products'
-    )
-    tags = TaggableManager()
-
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse('product_detail', kwargs={'slug':self.slug})
-
-    class Meta:
-        ordering = ('-publish',)
-
-
-class ProductDescription(models.Model):
-
-    product = models.OneToOneField(
-        Product,
-        on_delete=models.CASCADE,
-        primary_key = True,
-        related_name='products_description',
-    )
-    description = models.TextField(blank=True)
-    country = models.CharField(max_length=100, blank=True)
-    image = models.ImageField(upload_to='products/', blank=True)
-
-    def __str__(self):
-        return self.product.title
-
-class ProductImages(models.Model):
-
-	title = models.CharField("Title", max_length=100)
-	description = models.TextField("Description")
-	image = models.ImageField("Image", upload_to="products/additional/")
-	product = models.ForeignKey(Product, verbose_name='Product', on_delete=models.CASCADE)
-
-	def __str__(self):
-		return self.title
-
-
 class Seller(models.Model):
 
     user = models.OneToOneField(
@@ -92,6 +31,47 @@ class Seller(models.Model):
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.sellers.save()
+
+class Product(models.Model):
+
+    title = models.CharField('Product title', max_length=100, unique=True,)
+    count = models.IntegerField(default=0,)
+    price = models.DecimalField(default=0, max_digits=6, decimal_places=2)
+    description = models.TextField(blank=True)
+    country = models.CharField(max_length=100, blank=True)
+    image = models.ImageField(upload_to='products/', blank=True,default='products/no-image.jpg')
+    slug = models.SlugField(max_length=255, unique_for_date='publish')
+    publish = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    draft = models.BooleanField("Draft",default=False)
+    seller = models.ForeignKey(
+        Seller,
+        on_delete=models.CASCADE,
+        related_name='products'
+    )
+    tags = TaggableManager()
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('product_detail', kwargs={'slug':self.slug})
+
+    class Meta:
+        ordering = ('-publish',)
+
+
+class ProductImages(models.Model):
+
+	title = models.CharField("Title", max_length=100)
+	description = models.TextField("Description")
+	image = models.ImageField("Image", upload_to="products/additional/")
+	product = models.ForeignKey(Product, verbose_name='Product', on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.title
+
 
 class Comment(models.Model):
     product = models.ForeignKey(

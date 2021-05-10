@@ -19,7 +19,11 @@
                 {% endfor %}
                 </p>
                 <p class="img_view">
-                <img src="{{ product.products_description.image.url }}" class="img1">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="img1">
+                {% else %}
+                    <img src="media/products/no-image.jpg" class="img1">
+                {% endif %}
                 {% for image in product.productimages_set.all %}
                     <img src="{{ image.image.url }}" class="img1" alt="{{ image.description }}">
                 {% endfor %}
