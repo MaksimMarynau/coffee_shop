@@ -18,6 +18,17 @@ a {
     color: white;
 }
 
+a.button{
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 10px;
+    float: right;
+    text-decoration: none;
+    color: initial;
+}
+
 h2.updated {
     text-shadow: 0 0 0.15em white;
 }

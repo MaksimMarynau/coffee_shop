@@ -5,6 +5,7 @@
 {% block head_title %}{% trans "Your products" %}{% endblock %}
 
 {% block content %}
+{% if products %}
 {% for product in products %}
 <div class="transparent1">
     <div class="card">
@@ -29,6 +30,7 @@
             <img src="{{ image.image.url }}" class="img1" alt="{{ image.description }}">
         {% endfor %}
         </p>
+        <a href="{% url 'update_product' product.slug %}" class="button">Update</a>
     </div>
 </div>
 {% endfor %}
@@ -54,5 +56,18 @@
     {% endif %}
   </ul>
 {% endif %}
+{% else %}
+<div class="transparent1">
+    <div class="card">
+        <p>
+            There are no products yet.
+        </p>
+    </div>
+</div>
+{% endif %}
+
+
+
+
 
 {% endblock %}

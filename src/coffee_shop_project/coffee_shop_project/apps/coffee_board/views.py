@@ -60,7 +60,7 @@ class ProductDetailView(TagMixin,DetailView):
 
     def post(self, request, slug):
         form = CommentForm(request.POST)
-        product = Product.objects.get(slug=slug)
+        product = get_object_or_404(Product, slug=slug)
         if form.is_valid():
             new_comment = form.save(commit=False)
             new_comment.name = self.request.user
@@ -116,7 +116,6 @@ def update_profile(request):
         seller_form.user = request.user
         if seller_form.is_valid():
             seller_form.save()
-            messages.success(request, ('Your profile was successfully updated!'))
             return redirect('/')
         else:
             messages.error(request, ('Please correct the error below.'))
