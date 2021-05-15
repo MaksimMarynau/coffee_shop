@@ -31,6 +31,7 @@
         {% endfor %}
         </p>
         <a href="{% url 'update_product' product.slug %}" class="button">Update</a>
+        <a href="{% url 'delete_product' product.slug %}" class="button">Delete</a>
     </div>
 </div>
 {% endfor %}

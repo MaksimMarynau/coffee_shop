@@ -18,13 +18,34 @@ a {
     color: white;
 }
 
+input[type=submit], input[type=button], input[type=reset]{
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 10px;
+    float: bottom;
+    text-decoration: none;
+    color: initial;
+}
+button[type=submit], button[type=reset]{
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 10px;
+    float: bottom;
+    text-decoration: none;
+    color: initial;
+}
+
 a.button{
     -webkit-appearance: button;
     -moz-appearance: button;
     appearance: button;
     background-color: rgba(255,255,255,0.5);
     border-radius: 10px;
-    float: right;
+    float: bottom;
     text-decoration: none;
     color: initial;
 }

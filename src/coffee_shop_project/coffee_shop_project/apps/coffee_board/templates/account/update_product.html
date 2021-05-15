@@ -7,13 +7,17 @@
 {% block content %}
 <div class="transparent1">
     <div class="card">
-        <h1>{% trans "Add some information" %} to product: {{ product.title }}</h1>
-        <form method="post" action="{% url 'update_product' product.slug %}"
-        enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ product_form.as_p }}
-          <button type="submit">{% trans 'Save' %}</button>
-        </form>
+        {% if product %}
+            <h1>{% trans "Add some information" %} to product: {{ product.title }}</h1>
+            <form method="post" action="{% url 'update_product' product.slug %}"
+            enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ product_form.as_p }}
+              <button type="submit">{% trans 'Save' %}</button>
+            </form>
+        {% else %}
+        <h2>{{ exception }}</h2>
+        {% endif %}
     </div>
 </div>
 

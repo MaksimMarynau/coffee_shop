@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -145,19 +147,39 @@ def add_product(request):
 
 @login_required
 def update_product(request,slug=None):
-    product = get_object_or_404(Product, slug=slug)
-    if request.method == 'POST':
-        product_form = ProductForm(
-            request.POST,
-            request.FILES,
-            instance=product
+        product = get_object_or_404(
+            Product,
+            slug=slug,
+            seller=request.user.sellers
         )
-        if product_form.is_valid():
-            product_form.save()
-        return redirect(product.get_absolute_url())
-    else:
-        product_form = ProductForm(instance=product)
-    return render(request, 'account/update_product.html', {
-        'product_form': product_form,
-        'product': product,
-    })
+        if (request.method == 'POST'):
+            product_form = ProductForm(
+                request.POST,
+                request.FILES,
+                instance=product
+            )
+            if product_form.is_valid():
+                product_form.save()
+            return redirect(product.get_absolute_url())
+        else:
+            product_form = ProductForm(instance=product)
+        return render(request, 'account/update_product.html', {
+            'product_form': product_form,
+            'product': product,
+        })
+
+@login_required
+def delete_product(request,slug=None):
+    product = get_object_or_404(
+        Product,
+        slug=slug,
+        seller=request.user.sellers
+    )
+    if request.method == 'POST':
+        product.delete()
+        Tag.objects.annotate(
+                ntag=Count('taggit_taggeditem_items')
+            ).filter(ntag=0).delete()
+        return redirect('/')
+
+    return render(request, 'account/delete_product.html')

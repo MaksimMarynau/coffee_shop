@@ -29,6 +29,10 @@ urlpatterns = [
         views.update_product,
         name='update_product'
     ),
+    path('accounts/delete_product/<slug:slug>/',
+        views.delete_product,
+        name='delete_product'
+    ),
     path('accounts/user_products', views.user_products, name='user_products'),
     path('', include('coffee_board.urls')),
 ]
