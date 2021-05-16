@@ -1,5 +1,6 @@
 {% load static %}
 <div class="pagination">
+    {% if page_obj %}
     <p>
         Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
     </p>
@@ -14,4 +15,11 @@
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
+    {% else %}
+
+    <h1>No products</h1>
+
+    {% endif %}
+
+
 </div>

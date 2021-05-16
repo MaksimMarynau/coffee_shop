@@ -12,6 +12,8 @@ from taggit.models import Tag
 from django.db.models import Count
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
+from django.contrib.postgres.search import TrigramSimilarity
+from django.db.models.functions import Greatest
 import re
 # Create your views here.
 from .models import Product, Comment, Seller
@@ -21,6 +23,7 @@ from .forms import (
     SellerForm,
     ProductForm,
     AIFormSet,
+    SearchForm,
 )
 
 
@@ -81,6 +84,25 @@ class ProductDetailView(TagMixin,DetailView):
             'form':form,
             'product':product,
             })
+
+def post_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        results = Product.objects.annotate(
+            similarity=Greatest(
+            TrigramSimilarity('title',query),
+            TrigramSimilarity('description',query),
+            )
+        ).filter(similarity__gte=0.2).order_by('-similarity')
+    return render(request, 'products/search.html',
+            {'form': form,
+            'query': query,
+            'results': results,})
 
 def aboutView(request):
     return render(request, 'products/about.html')

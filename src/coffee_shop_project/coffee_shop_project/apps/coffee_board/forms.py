@@ -87,3 +87,6 @@ AIFormSet = forms.inlineformset_factory(
     ProductImages,
     fields='__all__'
 )
+
+class SearchForm(forms.Form):
+    query = forms.CharField()

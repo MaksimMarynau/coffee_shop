@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+
+
+{% if query %}
+<h1>Products containing "{{ query }}"</h1>
+<h3>
+    {% with results.count as total_results %}
+        Found {{ total_results }} result{{ total_results|pluralize}}
+    {% endwith %}
+</h3>
+{% for product in results %}
+<div class="transparent1">
+    <div class="card">
+        <h2 class='updated'>
+            <a href="{{ product.get_absolute_url }}">
+                {{ product.title }}
+            </a>
+        </h2>
+        {{ product.description|truncatewords:5 }}
+    </div>
+</div>
+{% empty %}
+    <p>There are no results for your query.</p>
+{% endfor %}
+<p>
+    <a href="{% url 'post_search' %}" class="button">Search again</a>
+</p>
+{% else %}
+    <h1>Search for posts</h1>
+    <form action="." method="get" style="color: white;">
+        {{ form.as_p }}
+        <input type="submit" value="Search">
+    </form>
+{% endif %}
+
+{% endblock %}
