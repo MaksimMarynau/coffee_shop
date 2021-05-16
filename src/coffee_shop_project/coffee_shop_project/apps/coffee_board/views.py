@@ -20,7 +20,7 @@ from .forms import (
     RegistrationForm,
     SellerForm,
     ProductForm,
-    ProductImagesForm,
+    AIFormSet,
 )
 
 
@@ -62,7 +62,8 @@ class ProductDetailView(TagMixin,DetailView):
 
     def post(self, request, slug):
         form = CommentForm(request.POST)
-        product = get_object_or_404(Product, slug=slug)
+        filter = Product.objects.filter(draft=False)
+        product = get_object_or_404(filter, slug=slug)
         if form.is_valid():
             new_comment = form.save(commit=False)
             new_comment.name = self.request.user
@@ -73,7 +74,8 @@ class ProductDetailView(TagMixin,DetailView):
 
     def get(self, request, slug):
         form = CommentForm()
-        product = Product.objects.filter(draft=False).get(slug=slug)
+        filter = Product.objects.filter(draft=False)
+        product = get_object_or_404(filter, slug=slug)
         return render(request, 'products/product_detail.html',
             {
             'form':form,
@@ -138,11 +140,16 @@ def add_product(request):
             product.slug = '_'.join(re.findall(r'\w+',product.title)).lower()
             product.save()
             product_form.save_m2m()
-            return redirect('/')
+            formset = AIFormSet(request.POST, request.FILES, instance=product)
+            if formset.is_valid():
+                formset.save()
+                return redirect('/')
     else:
         product_form = ProductForm()
+        formset = AIFormSet()
     return render(request, 'account/add_product.html', {
         'product_form': product_form,
+        'formset': formset,
     })
 
 @login_required
@@ -152,7 +159,7 @@ def update_product(request,slug=None):
             slug=slug,
             seller=request.user.sellers
         )
-        if (request.method == 'POST'):
+        if request.method == 'POST':
             product_form = ProductForm(
                 request.POST,
                 request.FILES,
@@ -160,10 +167,15 @@ def update_product(request,slug=None):
             )
             if product_form.is_valid():
                 product_form.save()
-            return redirect(product.get_absolute_url())
+                formset = AIFormSet(request.POST, request.FILES, instance=product)
+                if formset.is_valid():
+                    formset.save()
+                    return redirect(product.get_absolute_url())
         else:
             product_form = ProductForm(instance=product)
+            formset = AIFormSet(instance=product)
         return render(request, 'account/update_product.html', {
+            'formset':formset,
             'product_form': product_form,
             'product': product,
         })

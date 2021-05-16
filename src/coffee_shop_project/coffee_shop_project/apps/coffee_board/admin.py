@@ -43,7 +43,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(ProductImages)
 class ProductImagesAdmin(admin.ModelAdmin):
-	list_display = ('title','product','get_image')
+	list_display = ('get_image',)
 	readonly_fields = ('get_image',)
 
 	def get_image(self,obj):

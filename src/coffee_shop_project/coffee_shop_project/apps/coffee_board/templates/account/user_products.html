@@ -30,8 +30,11 @@
             <img src="{{ image.image.url }}" class="img1" alt="{{ image.description }}">
         {% endfor %}
         </p>
-        <a href="{% url 'update_product' product.slug %}" class="button">Update</a>
-        <a href="{% url 'delete_product' product.slug %}" class="button">Delete</a>
+        <p>
+            <a href="{% url 'update_product' product.slug %}" class="button">Update</a>
+            <a href="{% url 'delete_product' product.slug %}" class="button">Delete</a>
+        </p>
+
     </div>
 </div>
 {% endfor %}

@@ -13,6 +13,7 @@
             enctype="multipart/form-data">
               {% csrf_token %}
               {{ product_form.as_p }}
+              {{ formset.as_p }}
               <button type="submit">{% trans 'Save' %}</button>
             </form>
         {% else %}

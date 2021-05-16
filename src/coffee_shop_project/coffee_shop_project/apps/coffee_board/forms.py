@@ -82,7 +82,8 @@ class ProductForm(forms.ModelForm):
                 self.fields['image'].disabled = True
 
 
-class ProductImagesForm(forms.ModelForm):
-    class Meta:
-        model = ProductImages
-        fields = ('title', 'description','image','product')
+AIFormSet = forms.inlineformset_factory(
+    Product,
+    ProductImages,
+    fields='__all__'
+)

@@ -64,8 +64,6 @@ class Product(models.Model):
 
 class ProductImages(models.Model):
 
-	title = models.CharField("Title", max_length=100)
-	description = models.TextField("Description")
 	image = models.ImageField("Image", upload_to="products/additional/")
 	product = models.ForeignKey(Product, verbose_name='Product', on_delete=models.CASCADE)
 
