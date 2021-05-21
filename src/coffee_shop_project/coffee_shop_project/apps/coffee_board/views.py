@@ -26,11 +26,12 @@ from .forms import (
     SearchForm,
 )
 
-
 class TagMixin(object):
     def get_context_data(self, **kwargs):
         context = super(TagMixin, self).get_context_data(**kwargs)
-        context['tags'] = Tag.objects.order_by('name').annotate(count_tags=Count('taggit_taggeditem_items'))
+        context['tags'] = Tag.objects.order_by('name').annotate(
+            count_tags=Count('taggit_taggeditem_items')
+        )
         return context
 
 class ProductView(TagMixin,ListView):
@@ -110,11 +111,11 @@ def aboutView(request):
 def contactView(request):
     return render(request, 'products/contact.html')
 
-def tagsView(request):
-    tags = Tag.objects.order_by('name').annotate(
-        count_tags=Count('taggit_taggeditem_items')
-    )
-    return render(request, 'products/tags.html', {'tags':tags})
+# def tagsView(request):
+#     tags = Tag.objects.order_by('name').annotate(
+#         count_tags=Count('taggit_taggeditem_items')
+#     )
+#     return render(request, 'products/tags.html', {'tags':tags})
 
 @login_required
 def user_products(request):

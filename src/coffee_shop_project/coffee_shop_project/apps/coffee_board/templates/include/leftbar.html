@@ -1,27 +1,38 @@
 <div class="leftcolumn">
     <div class="transparent1">
         <div class="card">
-            <h2 class="updated"><a href="{% url 'product_list' %}">MAIN</a></h2>
+            <h2 class="updated2"><a href="{% url 'product_list' %}">MAIN</a></h2>
         </div>
     </div>
     <div class="transparent1">
         <div class="card">
-            <h2 class="updated"><a href="{% url 'post_search' %}">SEARCH</a></h2>
+            <h2 class="updated2"><a href="{% url 'post_search' %}">SEARCH</a></h2>
         </div>
     </div>
     <div class="transparent1">
         <div class="card">
-            <h2 class="updated"><a href="{% url 'tags' %}">ALL TAGS</a></h2>
+            <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn"><u>ALL TAGS</u></button>
+                <div id="myDropdown" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                {% for tag in tags %}
+                <a href="{% url 'tagged' tag.slug  %}">{{ tag.name }}</a>
+                {# ({{ tag.count_tags }}) #}
+                {% empty %}
+                    No tags
+                {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
     <div class="transparent1">
         <div class="card">
-            <h2 class="updated"><a href="{% url 'about' %}">ABOUT</a></h2>
+            <h2 class="updated2"><a href="{% url 'about' %}">ABOUT</a></h2>
         </div>
     </div>
     <div class="transparent1">
         <div class="card">
-            <h2 class="updated"><a href="{% url 'contact' %}">CONTACT</a></h2>
+            <h2 class="updated2"><a href="{% url 'contact' %}">CONTACT</a></h2>
         </div>
     </div>
 </div>

@@ -59,6 +59,10 @@ h2.updated {
     text-shadow: 0 0 0.15em white;
 }
 
+h2.updated2 {
+    text-shadow: 0 0 0.15em white;
+    text-align: center;
+}
 .transparent1 {
     background-color: rgba(0,0,0,0.3);
     border-radius: 15px;
@@ -209,6 +213,64 @@ ul#menu li {
     font-size: 30px;
     text-shadow: 0 0 0.15em white;
 }
+
+.dropbtn {
+    background-color: rgba(255,255,255,0);
+    color: white;
+    font-family: Apple Chancery, cursive;
+    text-shadow: 0 0 0.15em white;
+    border-radius: 15px;
+    padding: 16px;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: rgba(233,233,233,0.5);
+}
+
+#myInput {
+    border-box: box-sizing;
+    background-image: url('../searchicon.png');
+    background-position: 14px 12px;
+    background-repeat: no-repeat;
+    background-color: rgba(233,233,233,0.7);
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+    border-radius: 15px;
+}
+
+#myInput:focus {outline: 3px solid #ddd ;}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    border-radius: 15px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(233,233,233,0.7);
+    min-width: 230px;
+    overflow: auto;
+    border: 1px solid #000;
+    z-index: 1;
+    border-radius: 15px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 2px 4px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
 
 #myBtn {
     display: none;
