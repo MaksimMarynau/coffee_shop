@@ -24,24 +24,18 @@ from .forms import (
     ProductForm,
     AIFormSet,
     SearchForm,
+    UserUpdateForm,
 )
 
-class TagMixin(object):
-    def get_context_data(self, **kwargs):
-        context = super(TagMixin, self).get_context_data(**kwargs)
-        context['tags'] = Tag.objects.order_by('name').annotate(
-            count_tags=Count('taggit_taggeditem_items')
-        )
-        return context
 
-class ProductView(TagMixin,ListView):
+class ProductView(ListView):
     model = Product
     queryset = Product.objects.filter(draft=False).order_by('-publish')
     template_name = 'products/product_list.html'
     paginate_by = 5
     context_object_name = 'my_products'
 
-class TagIndexView(TagMixin,ListView):
+class TagIndexView(ListView):
     model = Product
     template_name = 'products/product_list.html'
     paginate_by = 5
@@ -58,7 +52,7 @@ class ProtectedView(TemplateView):
         return super().dispatch(*args, **kwargs)
 
 @method_decorator(login_required, name='dispatch')
-class ProductDetailView(TagMixin,DetailView):
+class ProductDetailView(DetailView):
     login_required = True
     model = Product
     slug_field = 'slug'
@@ -105,17 +99,11 @@ def post_search(request):
             'query': query,
             'results': results,})
 
-def aboutView(request):
-    return render(request, 'products/about.html')
-
-def contactView(request):
-    return render(request, 'products/contact.html')
-
-# def tagsView(request):
-#     tags = Tag.objects.order_by('name').annotate(
-#         count_tags=Count('taggit_taggeditem_items')
-#     )
-#     return render(request, 'products/tags.html', {'tags':tags})
+def tagsView(request):
+    tags = Tag.objects.order_by('name').annotate(
+        count_tags=Count('taggit_taggeditem_items')
+    )
+    return render(request, 'products/tags.html', {'tags':tags})
 
 @login_required
 def user_products(request):
@@ -140,16 +128,20 @@ def user_products(request):
 def update_profile(request):
     if request.method == 'POST':
         seller_form = SellerForm(request.POST, instance=request.user.sellers)
+        user_form = UserUpdateForm(request.POST, instance=request.user)
         seller_form.user = request.user
-        if seller_form.is_valid():
+        if seller_form.is_valid() and user_form.is_valid():
             seller_form.save()
+            user_form.save()
             return redirect('/')
         else:
             messages.error(request, ('Please correct the error below.'))
     else:
         seller_form = SellerForm(instance=request.user.sellers)
+        user_form = UserUpdateForm(instance=request.user)
     return render(request, 'account/update_profile.html', {
         'seller_form': seller_form,
+        'user_form': user_form,
     })
 
 

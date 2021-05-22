@@ -34,16 +34,14 @@ class RegistrationForm(UserCreationForm):
             'password2',
         )
 
-    def save(self, commit=True, **kwargs):
-        user = super(RegistrationForm, self).save(commit=False)
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.email = self.cleaned_data['email']
-
-        if commit:
-            user.save()
-
-        return user
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'first_name',
+            'last_name',
+        )
 
 class SellerForm(forms.ModelForm):
     class Meta:
@@ -89,4 +87,4 @@ AIFormSet = forms.inlineformset_factory(
 )
 
 class SearchForm(forms.Form):
-    query = forms.CharField()
+    query = forms.CharField(label='')

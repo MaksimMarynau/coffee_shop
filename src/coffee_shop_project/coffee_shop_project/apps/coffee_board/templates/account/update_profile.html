@@ -11,6 +11,7 @@
         <form method="post" action="{% url 'update_profile' %}">
           {% csrf_token %}
           {{ seller_form.as_p }}
+          {{ user_form.as_p }}
           <button type="submit">{% trans 'Save changes' %}</button>
         </form>
     </div>

@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.flatpages import views as fp_views
+
 
 from coffee_board import views
 
@@ -34,6 +36,8 @@ urlpatterns = [
         name='delete_product'
     ),
     path('accounts/user_products', views.user_products, name='user_products'),
+    path('about/', fp_views.flatpage, {'url': '/about/'}, name='about'),
+    path('contact/', fp_views.flatpage, {'url': '/contact/'}, name='contact'),
     path('', include('coffee_board.urls')),
 ]
 

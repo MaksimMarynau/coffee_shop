@@ -24,13 +24,13 @@
     </div>
 </div>
 {% empty %}
-    <p>There are no results for your query.</p>
+    <p>There are no results for your request.</p>
 {% endfor %}
 <p>
     <a href="{% url 'post_search' %}" class="button">Search again</a>
 </p>
 {% else %}
-    <h1>Search for posts</h1>
+    <h1>Search for products</h1>
     <form action="." method="get" style="color: white;">
         {{ form.as_p }}
         <input type="submit" value="Search">
