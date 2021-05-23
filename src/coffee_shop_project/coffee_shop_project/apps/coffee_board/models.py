@@ -1,13 +1,12 @@
 from django.db import models
 from django.utils import timezone
-from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
 from django.urls import reverse
 from taggit.managers import TaggableManager
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django import forms
+
 # Create your models here.
 class Seller(models.Model):
 

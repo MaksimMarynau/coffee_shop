@@ -1,8 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
 from django.views.generic import ListView, DetailView
-from django.views.generic.base import View
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -10,8 +7,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from taggit.models import Tag
 from django.db.models import Count
-from django.contrib.auth import login, authenticate
-from django.contrib import messages
+from django.contrib.auth import login
 from django.contrib.postgres.search import TrigramSimilarity
 from django.db.models.functions import Greatest
 import re
@@ -134,8 +130,6 @@ def update_profile(request):
             seller_form.save()
             user_form.save()
             return redirect('/')
-        else:
-            messages.error(request, ('Please correct the error below.'))
     else:
         seller_form = SellerForm(instance=request.user.sellers)
         user_form = UserUpdateForm(instance=request.user)
@@ -209,4 +203,4 @@ def delete_product(request,slug=None):
             ).filter(ntag=0).delete()
         return redirect('/')
 
-    return render(request, 'account/delete_product.html')
+    return render(request, 'account/delete_product.html', {'product':product})
