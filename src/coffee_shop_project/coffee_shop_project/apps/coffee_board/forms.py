@@ -53,7 +53,6 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = (
             'title',
-            'count',
             'price',
             'description',
             'country',
@@ -62,7 +61,6 @@ class ProductForm(forms.ModelForm):
         )
         labels = {
             "title": _("Product title"),
-            "count": _("How many items?"),
             "price": _("What price?"),
             "description": _("Explain your product"),
             "country": _("Country of production"),

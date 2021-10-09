@@ -26,7 +26,7 @@ from .forms import (
 
 class ProductView(ListView):
     model = Product
-    queryset = Product.objects.filter(draft=False).order_by('-publish')
+    queryset = Product.objects.filter(available=True).order_by('-publish')
     template_name = 'products/product_list.html'
     paginate_by = 5
     context_object_name = 'my_products'
@@ -56,7 +56,7 @@ class ProductDetailView(DetailView):
 
     def post(self, request, slug):
         form = CommentForm(request.POST)
-        filter = Product.objects.filter(draft=False)
+        filter = Product.objects.filter(available=True)
         product = get_object_or_404(filter, slug=slug)
         if form.is_valid():
             new_comment = form.save(commit=False)
@@ -68,7 +68,7 @@ class ProductDetailView(DetailView):
 
     def get(self, request, slug):
         form = CommentForm()
-        filter = Product.objects.filter(draft=False)
+        filter = Product.objects.filter(available=True)
         product = get_object_or_404(filter, slug=slug)
         return render(request, 'products/product_detail.html',
             {

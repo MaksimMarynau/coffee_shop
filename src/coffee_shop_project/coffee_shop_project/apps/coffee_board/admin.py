@@ -22,17 +22,18 @@ class ProductImagesInline(admin.StackedInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ['id']
-    list_display = ('seller','title','count','price','description',
-        'country','publish','draft'
+    list_display = ('seller','title','price','available',
+        'created','publish',
     )
-    list_filter = ('title', 'created','publish', 'seller')
+    list_filter = ('available','title', 'created','publish', 'seller')
+    list_editable = ['price', 'available']
     search_fields = ('title','seller')
     readonly_fields = ['image_tag']
     inlines = [ProductImagesInline]
     prepopulated_fields = {'slug':('title',)}
     # raw_id_fields = ('seller',)
     date_hierarchy = 'publish'
-    ordering = ('draft', 'publish')
+    ordering = ('available', 'publish')
     save_on_top = True
     save_as = True
 

@@ -34,7 +34,6 @@ class Seller(models.Model):
 class Product(models.Model):
 
     title = models.CharField('Product title', max_length=100, unique=True,)
-    count = models.IntegerField(default=0,)
     price = models.DecimalField(default=0, max_digits=6, decimal_places=2)
     description = models.TextField(blank=True)
     country = models.CharField(max_length=100, blank=True)
@@ -43,7 +42,7 @@ class Product(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    draft = models.BooleanField("Draft",default=False)
+    available = models.BooleanField("Available",default=True)
     seller = models.ForeignKey(
         Seller,
         on_delete=models.CASCADE,
