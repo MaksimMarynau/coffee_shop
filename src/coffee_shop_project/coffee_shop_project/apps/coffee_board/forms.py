@@ -45,7 +45,7 @@ class UserUpdateForm(forms.ModelForm):
 class SellerForm(forms.ModelForm):
     class Meta:
         model = Seller
-        fields = ('phone', 'address')
+        fields = ('address',)
 
 
 class ProductForm(forms.ModelForm):

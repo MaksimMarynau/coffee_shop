@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# Create your models here.
+
 class Seller(models.Model):
 
     user = models.OneToOneField(
@@ -16,7 +16,6 @@ class Seller(models.Model):
         unique= True,
         related_name='sellers'
     )
-    phone = PhoneNumberField(null=False, blank=False, unique=True)
     address = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
@@ -66,7 +65,7 @@ class ProductImages(models.Model):
 	product = models.ForeignKey(Product, verbose_name='Product', on_delete=models.CASCADE)
 
 	def __str__(self):
-		return self.title
+		return self.product.title
 
 
 class Comment(models.Model):
