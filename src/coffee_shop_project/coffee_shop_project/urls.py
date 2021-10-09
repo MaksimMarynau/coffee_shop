@@ -38,6 +38,7 @@ urlpatterns = [
     path('accounts/user_products', views.user_products, name='user_products'),
     path('about/', fp_views.flatpage, {'url': '/about/'}, name='about'),
     path('contact/', fp_views.flatpage, {'url': '/contact/'}, name='contact'),
+    path('cart/', include('cart.urls')),
     path('', include('coffee_board.urls')),
 ]
 

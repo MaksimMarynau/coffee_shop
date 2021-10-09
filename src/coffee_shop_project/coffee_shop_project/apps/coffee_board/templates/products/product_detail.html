@@ -10,6 +10,11 @@
                 {{ product.description }}
             </b></p>
             <li><b>Price:</b> {{ product.price }}$</li>
+            <form action="{% url 'cart_add' product.id %}" method="post">
+                {{ cart_product_form }}
+                {% csrf_token %}
+                <input type="submit" value="Add to cart">
+            </form>
             <li><b>Shipping from:</b> {{ product.country }}</li>
             <li><b>Seller is:</b> <i>{{ product.seller.user }}</i></li>
             <li><b>Contact:</b> {{ product.seller.phone }}, {{ product.seller.address }}</li>

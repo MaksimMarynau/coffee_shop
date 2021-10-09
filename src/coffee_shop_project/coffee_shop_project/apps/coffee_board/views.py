@@ -22,7 +22,7 @@ from .forms import (
     SearchForm,
     UserUpdateForm,
 )
-
+from cart.forms import CartAddProductForm
 
 class ProductView(ListView):
     model = Product
@@ -68,12 +68,14 @@ class ProductDetailView(DetailView):
 
     def get(self, request, slug):
         form = CommentForm()
+        cart_product_form = CartAddProductForm()
         filter = Product.objects.filter(available=True)
         product = get_object_or_404(filter, slug=slug)
         return render(request, 'products/product_detail.html',
             {
             'form':form,
             'product':product,
+            'cart_product_form':cart_product_form,
             })
 
 def post_search(request):

@@ -298,3 +298,23 @@ ul#menu li {
         padding: 0;
     }
 }
+
+table {
+    width:100%;
+    border-spacing:0;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    text-align:left;
+    padding:10px;
+    margin:0;
+}
+
+thead th, tbody tr.total {
+    font-weight:bold;
+}
+
+table.cart img {
+    width:180px;
+}
