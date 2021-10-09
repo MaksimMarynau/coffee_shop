@@ -89,6 +89,7 @@ def post_search(request):
         results = Product.objects.annotate(
             similarity=Greatest(
             TrigramSimilarity('title',query),
+            TrigramSimilarity('seller__user__username',query),
             TrigramSimilarity('description',query),
             )
         ).filter(similarity__gte=0.2).order_by('-similarity')

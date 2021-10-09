@@ -20,7 +20,10 @@
                 {{ product.title }}
             </a>
         </h2>
-        {{ product.description|truncatewords:5 }}
+        <p>
+            <b>Short description: </b>{{ product.description|truncatewords:5 }}<br>
+            <b>Seller: </b><i>{{ product.seller.user }}</i><br>
+        </p>
     </div>
 </div>
 {% empty %}
