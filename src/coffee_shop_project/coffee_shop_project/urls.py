@@ -39,6 +39,7 @@ urlpatterns = [
     path('about/', fp_views.flatpage, {'url': '/about/'}, name='about'),
     path('contact/', fp_views.flatpage, {'url': '/contact/'}, name='contact'),
     path('cart/', include('cart.urls')),
+    path('orders/', include('orders.urls')),
     path('', include('coffee_board.urls')),
 ]
 

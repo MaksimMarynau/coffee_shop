@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'coffee_board',
     'cart',
+    'orders',
     'phonenumber_field',
     'allauth',
     'allauth.account',

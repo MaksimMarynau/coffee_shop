@@ -22,6 +22,20 @@ p {
     color: white;
 }
 
+input[type=checkbox], input[type=radio]{
+    width: 20px;
+    height: 20px;
+}
+
+input[type=text], input[type=number], input[type=email], input[type=password]{
+    width:300px;
+    margin-bottom:10px;
+    padding:10px 12px;
+    border:0;
+    background: white;
+    border-radius:4px;
+}
+
 input[type=submit], input[type=button], input[type=reset]{
     -webkit-appearance: button;
     -moz-appearance: button;
@@ -147,6 +161,7 @@ p.img_view {
     color: white;
     padding: 20px;
     margin-top: 20px;
+    overflow: hidden;
 }
 
 .cardtrans{
@@ -317,4 +332,47 @@ thead th, tbody tr.total {
 
 table.cart img {
     width:180px;
+}
+
+.order-info {
+    float:left;
+    width:300px;
+    padding:10px 20px;
+    border-bottom:4px solid;
+}
+
+.order-info ul li {
+    margin:0;
+    padding:0;
+}
+
+.order-info p {
+    font-weight:bold;
+    float:right;
+}
+
+.order-info span {
+    float:right;
+}
+.search-form form {
+    width: 800px;
+}
+
+.order-form {
+    float: right;
+}
+
+form p label{
+    display:block;
+    clear:both;
+    padding-bottom:4px;
+}
+
+form textarea {
+    width:300px;
+    margin-bottom:10px;
+    padding:10px 12px;
+    border:0;
+    background: white;
+    border-radius:4px;
 }
