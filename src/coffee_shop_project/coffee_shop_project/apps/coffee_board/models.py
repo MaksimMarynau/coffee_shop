@@ -1,17 +1,16 @@
 from django.db import models
 from django.utils import timezone
-from phonenumber_field.modelfields import PhoneNumberField
 from django.urls import reverse
-from taggit.managers import TaggableManager
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.conf import settings
+from django.db.models.signals import post_save
+from taggit.managers import TaggableManager
 
 
 class Seller(models.Model):
 
     user = models.OneToOneField(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         unique= True,
         related_name='sellers'
@@ -21,14 +20,15 @@ class Seller(models.Model):
     def __str__(self):
         return self.user.username
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             Seller.objects.create(user=instance)
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def save_user_profile(sender, instance, **kwargs):
         instance.sellers.save()
+
 
 class Product(models.Model):
 
@@ -47,7 +47,7 @@ class Product(models.Model):
         on_delete=models.CASCADE,
         related_name='products'
     )
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return self.title
@@ -61,11 +61,11 @@ class Product(models.Model):
 
 class ProductImages(models.Model):
 
-	image = models.ImageField("Image", upload_to="products/additional/")
-	product = models.ForeignKey(Product, verbose_name='Product', on_delete=models.CASCADE)
+    image = models.ImageField("Image", upload_to="products/additional/")
+    product = models.ForeignKey(Product, verbose_name='Product', on_delete=models.CASCADE)
 
-	def __str__(self):
-		return self.product.title
+    def __str__(self):
+        return self.product.title
 
 
 class Comment(models.Model):

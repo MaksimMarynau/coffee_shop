@@ -7,7 +7,11 @@
                 <span><em>Hello, {{ user.username }}!</em></span><br />
                 <a href="{% url 'update_profile' %}">Update profile </a><br />
                 <a href="{% url 'add_product' %}">Add product </a><br />
+                {% if user.is_staff %}
+                <a href="{% url 'user_products' %}">All products </a><br />
+                {% else %}
                 <a href="{% url 'user_products' %}">Your products </a><br />
+                {% endif %}
                 <a href="{% url 'account_logout' %}">Sign out </a>
                 <br>
             {% else %}

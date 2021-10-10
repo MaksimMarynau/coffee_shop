@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}About{% endblock %}
+{% block title %}{{ flatpage.title }}{% endblock %}
 
 {% block content %}
 
@@ -10,7 +10,7 @@
                   INFORMATION ABOUT US
                 </h2>
                 <p>
-                    {{ flatpage.content }}
+                    {{ flatpage.content|linebreaks }}
                 </p>
             </div>
         </div>

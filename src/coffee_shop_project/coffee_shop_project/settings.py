@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'coffee_board',
     'cart',
     'orders',
-    'phonenumber_field',
     'allauth',
     'allauth.account',
     'taggit',
@@ -87,15 +86,21 @@ WSGI_APPLICATION = 'coffee_shop_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'coffee_shop',
+#         'USER': str(os.getenv('DB_USER')),
+#         'PASSWORD' : str(os.getenv('DB_PASS')),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'coffee_shop',
-        'USER': str(os.getenv('DB_USER')),
-        'PASSWORD' : str(os.getenv('DB_PASS')),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -167,6 +172,8 @@ AUTHENTICATION_BACKEND = {
     'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
 }
+
+# AUTH_USER_MODEL = 'coffee_board.User'
 
 CART_SESSION_ID = 'cart'
 

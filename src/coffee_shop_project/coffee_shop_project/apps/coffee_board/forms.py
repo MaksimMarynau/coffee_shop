@@ -1,7 +1,8 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
+
 
 from .models import (
     Comment,
@@ -9,6 +10,7 @@ from .models import (
     Product,
     ProductImages,
 )
+
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -23,7 +25,7 @@ class CommentForm(forms.ModelForm):
 class RegistrationForm(UserCreationForm):
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = (
             'username',
             'first_name',
@@ -33,14 +35,17 @@ class RegistrationForm(UserCreationForm):
             'password2',
         )
 
+
 class UserUpdateForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = (
             'username',
             'first_name',
             'last_name',
+            'email',
         )
+
 
 class SellerForm(forms.ModelForm):
     class Meta:
@@ -82,6 +87,7 @@ AIFormSet = forms.inlineformset_factory(
     ProductImages,
     fields='__all__'
 )
+
 
 class SearchForm(forms.Form):
     query = forms.CharField(label='')

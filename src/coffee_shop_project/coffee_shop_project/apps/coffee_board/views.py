@@ -1,17 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
+from django.utils.decorators import method_decorator
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView
-from taggit.models import Tag
-from django.db.models import Count
-from django.contrib.auth import login
 from django.contrib.postgres.search import TrigramSimilarity
+from django.db.models import Count
 from django.db.models.functions import Greatest
+from taggit.models import Tag
 import re
-# Create your views here.
+
+
 from .models import Product, Comment, Seller
 from .forms import (
     CommentForm,
@@ -24,12 +23,14 @@ from .forms import (
 )
 from cart.forms import CartAddProductForm
 
+
 class ProductView(ListView):
     model = Product
     queryset = Product.objects.filter(available=True).order_by('-publish')
     template_name = 'products/product_list.html'
     paginate_by = 5
     context_object_name = 'my_products'
+
 
 class TagIndexView(ListView):
     model = Product
@@ -38,7 +39,8 @@ class TagIndexView(ListView):
     context_object_name = 'my_products'
 
     def get_queryset(self,tag_slug=None):
-        return Product.objects.filter(tags__slug=self.kwargs.get('slug'))
+        return Product.objects.filter(tags__slug=self.kwargs.get('slug'),available=True)
+
 
 class ProtectedView(TemplateView):
     template_name = 'products/product_detail.html'
@@ -46,6 +48,7 @@ class ProtectedView(TemplateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
+
 
 @method_decorator(login_required, name='dispatch')
 class ProductDetailView(DetailView):
@@ -78,6 +81,7 @@ class ProductDetailView(DetailView):
             'cart_product_form':cart_product_form,
             })
 
+
 def post_search(request):
     form = SearchForm()
     query = None
@@ -98,15 +102,20 @@ def post_search(request):
             'query': query,
             'results': results,})
 
+
 def tagsView(request):
     tags = Tag.objects.order_by('name').annotate(
         count_tags=Count('taggit_taggeditem_items')
     )
     return render(request, 'products/tags.html', {'tags':tags})
 
+
 @login_required
 def user_products(request):
-    product_list = Product.objects.filter(seller=request.user.sellers)
+    if request.user.is_staff:
+        product_list = Product.objects.all()
+    else:
+        product_list = Product.objects.filter(seller=request.user.sellers)
     page = request.GET.get('page', 1)
 
     paginator = Paginator(product_list, 2)
@@ -122,6 +131,7 @@ def user_products(request):
         'account/user_products.html',
         {'products':products}
     )
+
 
 @login_required
 def update_profile(request):
@@ -164,13 +174,20 @@ def add_product(request):
         'formset': formset,
     })
 
+
 @login_required
 def update_product(request,slug=None):
-        product = get_object_or_404(
-            Product,
-            slug=slug,
-            seller=request.user.sellers
-        )
+        if request.user.is_staff:
+            product = get_object_or_404(
+                Product,
+                slug=slug,
+            )
+        else:
+            productproduct = get_object_or_404(
+                Product,
+                slug=slug,
+                seller=request.user.sellers
+            )
         if request.method == 'POST':
             product_form = ProductForm(
                 request.POST,
@@ -192,18 +209,29 @@ def update_product(request,slug=None):
             'product': product,
         })
 
+
 @login_required
 def delete_product(request,slug=None):
-    product = get_object_or_404(
-        Product,
-        slug=slug,
-        seller=request.user.sellers
-    )
+    if request.user.is_staff:
+        product = get_object_or_404(
+            Product,
+            slug=slug,
+        )
+    else:
+        product = get_object_or_404(
+            Product,
+            slug=slug,
+            seller=request.user.sellers
+        )
     if request.method == 'POST':
-        product.delete()
-        Tag.objects.annotate(
+        product.available = False
+        for x in product.tags.all():
+            product.tags.remove(x)
+        product.save()
+        tag = Tag.objects.annotate(
                 ntag=Count('taggit_taggeditem_items')
-            ).filter(ntag=0).delete()
+            ).filter(ntag=0)
+        tag.delete()
         return redirect('/')
 
     return render(request, 'account/delete_product.html', {'product':product})
