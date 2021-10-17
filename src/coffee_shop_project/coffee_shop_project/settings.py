@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'coffee_board',
     'cart',
     'orders',
+    'crispy_forms',
     'allauth',
     'allauth.account',
     'taggit',
@@ -178,3 +179,5 @@ AUTHENTICATION_BACKEND = {
 CART_SESSION_ID = 'cart'
 
 TAGGIT_CASE_INSENSITIVE = True
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
