@@ -1,4 +1,4 @@
-<ul>
+<ul class="text-sm-start list-unstyled">
     {% for product in latest_posts %}
-    <li><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></li> {% endfor %}
+    <li><a class="text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title }}</a></li> {% endfor %}
 </ul>

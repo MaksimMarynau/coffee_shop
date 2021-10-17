@@ -11,16 +11,17 @@
 
 {% include "include/header.html" %}
 
-<div class="row">
+<div class="container-fluid text-center">
+  <div class="row content">
 
-    <div class="middle">
+    <div class="col-sm-8 text-left">
     {% block content %}
 
     {% endblock content %}
     </div>
 
     {% include "include/rightbar.html" %}
-
+    </div>
 </div>
 
 {% include "include/footer.html" %}

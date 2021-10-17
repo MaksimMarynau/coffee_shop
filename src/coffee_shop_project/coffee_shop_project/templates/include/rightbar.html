@@ -1,50 +1,27 @@
 {% load custom_tags %}
-<div class="rightcolumn">
-    <div class="transparent1">
-        <div class="card">
-            <h2>My blog</h2>
-            {% if user.is_authenticated %}
-                <span><em>Hello, {{ user.username }}!</em></span><br />
-                <a href="{% url 'update_profile' %}">Update profile </a><br />
-                <a href="{% url 'add_product' %}">Add product </a><br />
-                {% if user.is_staff %}
-                <a href="{% url 'user_products' %}">All products </a><br />
-                {% else %}
-                <a href="{% url 'user_products' %}">Your products </a><br />
-                {% endif %}
-                <a href="{% url 'account_logout' %}">Sign out </a>
-                <br>
-            {% else %}
-                <a href="{% url 'account_login' %}">Sign in </a>
-                <br>
-                <a href="{% url 'account_signup' %}">Registration </a>
-            {% endif %}
-
-            <p>There are {% total_posts %} products available.</p>
-
-            <h3>Latest added products</h3>
-            {% show_latest_posts 3%}
-
-            <h3>Most commented posts</h3>
-            {% get_most_commented_posts as most_commented_posts %}
-            <ul>
-            {% for product in most_commented_posts %}
-                <li><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></li>
-            {% endfor %}
-            </ul>
-            <div class="cart">
-                {% with total_items=cart|length %}
-                    {% if total_items > 0 %}
-                        Your cart:
-                        <a href="{% url 'cart_detail' %}">
-                          {{ total_items }} item{{ total_items|pluralize }},
-                          ${{ cart.get_total_price }}
-                        </a>
-                    {% else %}
-                        Your cart is empty.
-                    {% endif %}
-                {% endwith %}
-            </div>
-        </div>
+<div class="col-sm sidenav m-3 p-3">
+    <h4>My blog</h4>
+    <p class="text-sm-start">There are {% total_posts %} products available.</p>
+    <h3 class="text-sm-start">Latest added products</h3>
+    {% show_latest_posts 3 %}
+    <h3 class="text-sm-start">Most commented posts</h3>
+    {% get_most_commented_posts as most_commented_posts %}
+    <ul class="text-sm-start list-unstyled">
+        {% for product in most_commented_posts %}
+        <li><a class="text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <div class="cart">
+        {% with total_items=cart|length %}
+        {% if total_items > 0 %}
+        Your cart:
+        <a href="{% url 'cart_detail' %}">
+            {{ total_items }} item{{ total_items|pluralize }},
+            ${{ cart.get_total_price }}
+        </a>
+        {% else %}
+        Your cart is empty.
+        {% endif %}
+        {% endwith %}
     </div>
 </div>
