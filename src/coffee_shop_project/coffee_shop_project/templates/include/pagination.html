@@ -1,25 +1,37 @@
 {% load static %}
 <div class="pagination">
     {% if page_obj %}
-    <p>
-        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-    </p>
-    <span>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link">Previous</a>
+        </li>
+        {% endif %}
+        {% for i in page_obj.paginator.page_range %}
+        {% if page_obj.number == i %}
+        <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><a class="page-link">Next</a></li>
         {% endif %}
 
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
     {% else %}
 
     <h1>No products</h1>
 
     {% endif %}
-
-
 </div>

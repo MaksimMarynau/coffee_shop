@@ -5,32 +5,33 @@
 {% block content %}
 
 {% for product in my_products %}
-<div class="transparent1">
-    <div class="card">
-        <h2 class='updated'>
-          <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
-        </h2>
-        <p>Posted: {{ product.publish }} by {{ product.seller.user }}</p>
-        <p>Tags:
-        {% for tag in product.tags.all %}
-            <a href="{% url 'tagged' tag.slug %}">{{ tag.name }}</a>
-        {% empty %}
-            No tags
-        {% endfor %}
-        </p>
-        <p class="img_view">
+<div class="card mb-4">
+  <div class="row g-0">
+    <div class="col-md-4">
         {% if product.image %}
-            <img src="{{ product.image.url }}" class="img1">
+            <img src="{{ product.image.url }}" class="img-fluid rounded-start">
         {% else %}
-            <img src="media/products/no-image.jpg" class="img1">
+            <img src="media/products/no-image.jpg" class="img-fluid rounded-start">
         {% endif %}
-        {% for image in product.productimages_set.all %}
-            <img src="{{ image.image.url }}" class="img1" alt="{{ image.description }}">
-        {% endfor %}
-        </p>
     </div>
+    <div class="col-md-8 d-flex align-items-center">
+      <div class="card-body">
+        <h5 class="card-title text-capitalize"><a class="text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title }}</a></h5>
+        <p class="card-text">Posted: {{ product.publish }} by {{ product.seller.user }}</p>
+        <p class="card-text"><small class="text-muted">
+            Tags:
+            {% for tag in product.tags.all %}
+                <a href="{% url 'tagged' tag.slug %}">{{ tag.name }}</a>
+            {% empty %}
+                No tags
+            {% endfor %}
+        </small></p>
+      </div>
+    </div>
+  </div>
 </div>
+
 {% endfor %}
 
-    {% include "include/pagination.html" with page=page_obj %}
+{% include "include/pagination.html" with page=page_obj %}
 {% endblock %}
