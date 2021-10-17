@@ -1,70 +1,112 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}{{ product.title }}{% endblock %}
 
 {% block content %}
-    <div class="transparent1">
-        <div class="card">
-            <h2>{{ product.title }}</h2>
-            <p><b>Description:<br />
-                {{ product.description }}
-            </b></p>
-            <li><b>Price:</b> {{ product.price }}$</li>
-            <form action="{% url 'cart_add' product.id %}" method="post">
-                {{ cart_product_form }}
-                {% csrf_token %}
-                <input type="submit" value="Add to cart">
-            </form>
-            <li><b>Shipping from:</b> {{ product.country }}</li>
-            <li><b>Seller is:</b> <i>{{ product.seller.user }}</i></li>
-            <li><b>Contact info:</b>
-                {% if product.seller.address %}
-                    {{ product.seller.address }},
-                    {{ product.seller.user.email }}
-                {% else %}
-                    {{ product.seller.user.email }}
-                {% endif %}
-            </li>
-            <li><b>Posted:</b> {{ product.publish }}</li>
-            <p class="img_view">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" class="img2">
-                {% else %}
-                    <img src="../media/products/no-image.jpg" class="img2">
-                {% endif %}
-                {% for image in product.productimages_set.all %}
-                    <img src="{{ image.image.url }}" class="img2" alt="{{ image.description }}">
-                {% endfor %}
-            </p>
-
+<div class="container mt-5 mb-5">
+    <div class="card border-0">
+        <div class="row g-0">
+            <div class="col-md-6 border-end">
+                <div class="d-flex flex-column justify-content-center">
+                    <div class="main_image">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" id="main_product_image" width="350">
+                        {% else %}
+                        <img src="../media/products/no-image.jpg" width="350">
+                        {% endif %}
+                    </div>
+                    <div class="thumbnail_images">
+                        <ul id="thumbnail">
+                            {% if product.image %}
+                            <li><img onclick="changeImage(this)" src="{{ product.image.url }}" width="70"></li>
+                            {% endif %}
+                            {% for image in product.productimages_set.all %}
+                            {% if image %}
+                            <li><img onclick="changeImage(this)" src="{{ image.image.url }}" alt="{{ image.description }}" width="70"></li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3 right-side">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3>{{ product.title|title }}</h3>
+                    </div>
+                    <div class="mt-2 pr-3 content">
+                        <p>{{ product.description }}</p>
+                    </div>
+                    <h3>${{ product.price }}</h3>
+                    <form action="{% url 'cart_add' product.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="mt-5">
+                            <label>Quantity:</label>
+                            {{ cart_product_form.quantity }}
+                        </div>
+                        <input class="btn btn-dark" type="submit" value="Add to cart">
+                    </form>
+                    <dl class="row my-5">
+                        <dt class="col-sm-4 mb-3 text-start">Shipping from:</dt>
+                        <dd class="col-sm-8 mb-3 text-end">{{ product.country }}</dd>
+                        <dt class="col-sm-4 mb-3 text-start">Seller is:</dt>
+                        <dd class="col-sm-8 mb-3 text-end">
+                            {{ product.seller.user }}
+                        </dd>
+                        <dt class="col-sm-4 mb-3 text-start">Contact info:</dt>
+                        <dd class="col-sm-8 mb-3 text-end">
+                            {% if product.seller.address %}
+                            {{ product.seller.address }},
+                            {{ product.seller.user.email }}
+                            {% else %}
+                            {{ product.seller.user.email }}
+                            {% endif %}
+                        </dd>
+                    </dl>
+                    <p class="text-end text-muted m-0 p-0">
+                        <b>Posted:</b> {{ product.publish }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5 mb-5">
+    <div class="card border-0">
+        <div class="row g-0">
             <h2>Comments: </h2>
             <hr />
             {% for comment in product.comments.all %}
-                <p>Comment {{ forloop.counter }} by <u>{{ comment.name }}</u> on
-                    {{ comment.created }}
-                    <br />
-                    Contact: {{ comment.email }}
-                </p>
-                {{ comment.body|linebreaks }}
-                <hr />
+            <p class="text-start m-2">Comment {{ forloop.counter }} by <u>{{ comment.name }}</u> on
+                {{ comment.created }}
+                <br />
+                Contact: {{ comment.email }}
+            </p>
+            <p class="text-start m-2 fw-bolder">
+                {{ comment.body }}
+            </p>
+            <hr />
             {% empty %}
-                <p>
-                    There are no comments yet.
-                </p>
-                <hr />
+            <p>
+                There are no comments yet.
+            </p>
+            <hr />
             {% endfor %}
 
-        <br />
-        <div style="display:inline-block;">
-            <form action="{% url 'product_detail' product.slug %}" method="post">
-                <h2>Add a comment:</h2>
-                {% csrf_token %}
-                {{ form.as_p }}
-                <label><input type="submit" value="Add comment" class="comment_button"></label>
-            </form>
-        </div>
+            <br />
+            <div style="display:inline-block;">
+                <form action="{% url 'product_detail' product.slug %}" method="post">
+                    <h2>Add a comment:</h2>
+                    <div class="mb-3">
+                    {% csrf_token %}
+                    {{ form.body }}
+                    </div>
+                    <input type="submit" value="Add comment" class="btn btn-outline-dark mb-4">
+                </form>
+            </div>
         </div>
     </div>
-
+</div>
 
 {% endblock %}

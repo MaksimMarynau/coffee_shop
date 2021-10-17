@@ -11,10 +11,13 @@ Your shopping cart
             <a class="btn btn-outline-primary" href="{% url 'product_list' %}" class="text-uppercase text-decoration-none">Continue shopping</a>
         </div>
         <div class="d-flex justify-content-end align-items-end p-3">
-            <a class="btn btn-outline-primary" href="{% url 'order_create' %}" class="text-uppercase text-decoration-none">Checkout</a>
+            {% for item in cart %}
+            {% if item.product %}
+                <a class="btn btn-outline-primary" href="{% url 'order_create' %}" class="text-uppercase text-decoration-none">Checkout</a>
+            {% endif %}
+            {% endfor %}
         </div>
     </div>
-
     <table class="table table-striped table-hover">
         <thead>
             <tr>
@@ -68,7 +71,5 @@ Your shopping cart
     <p class="text-muted">Need help with an order?</p>
     <p class="text-muted"><a href="#" class="text-danger">Hotline:</a>+314440160 (International)</p>
 </div>
-
-
 
 {% endblock %}

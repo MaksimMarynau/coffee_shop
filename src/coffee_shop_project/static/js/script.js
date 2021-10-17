@@ -19,6 +19,13 @@ function topFunction() {
   document.documentElement.scrollTop = 0;
 }
 
+function changeImage(element) {
+
+var main_prodcut_image = document.getElementById('main_product_image');
+main_prodcut_image.src = element.src;
+
+
+}
 
 // /* When the user clicks on the button,
 // toggle between hiding and showing the dropdown content */

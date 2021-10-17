@@ -22,7 +22,12 @@
             ${{ cart.get_total_price }}
         </a>
         {% else %}
-        Your cart is empty.
+        <div class="text-start">
+            Your cart:
+        </div>
+        <a class="btn btn-outline-success" href="{% url 'cart_detail' %}">
+            Empty
+        </a>
         {% endif %}
         {% endwith %}
     </div>
