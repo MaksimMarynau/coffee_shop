@@ -14,19 +14,13 @@
     <div class="card border-0">
         {% with total_items=cart|length %}
         {% if total_items > 0 %}
-        <div class="text-start">
-            Your cart:
-        </div>
-        <a class="btn btn-outline-success" href="{% url 'cart_detail' %}">
-            {{ total_items }} item{{ total_items|pluralize }},
+        <a class="btn btn-outline-success d-flex justify-content-between" href="{% url 'cart_detail' %}">
+            <i class="fas fa-shopping-cart fa-3x text-start"></i>{{ total_items }} item{{ total_items|pluralize }},
             ${{ cart.get_total_price }}
         </a>
         {% else %}
-        <div class="text-start">
-            Your cart:
-        </div>
         <a class="btn btn-outline-success" href="{% url 'cart_detail' %}">
-            Empty
+            <i class="fas fa-shopping-cart fa-3x"></i>
         </a>
         {% endif %}
         {% endwith %}
