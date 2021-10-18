@@ -8,8 +8,8 @@ from django.contrib.postgres.search import TrigramSimilarity
 from django.db.models import Count
 from django.db.models.functions import Greatest
 from taggit.models import Tag
-import re
 
+import re
 
 from .models import Product, Comment, Seller
 from .forms import (

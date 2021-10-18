@@ -1,43 +1,54 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 {% block title %}Search{% endblock %}
 
 {% block content %}
 
 
 {% if query %}
-<h1>Products containing "{{ query }}"</h1>
+<h1>Products containing "<span class="text-success">{{ query }}</span>" </h1>
 <h3>
     {% with results.count as total_results %}
-        Found {{ total_results }} result{{ total_results|pluralize}}
+    Found {{ total_results }} result{{ total_results|pluralize}}
     {% endwith %}
 </h3>
 {% for product in results %}
-<div class="transparent1">
-    <div class="card">
-        <h2 class='updated'>
-            <a href="{{ product.get_absolute_url }}">
-                {{ product.title }}
-            </a>
-        </h2>
-        <p>
-            <b>Short description: </b>{{ product.description|truncatewords:5 }}<br>
-            <b>Seller: </b><i>{{ product.seller.user }}</i><br>
-        </p>
+<div class="card mb-4">
+    <div class="row g-0">
+        <div class="col-md d-flex justify-content-between align-items-end">
+            <div class="card-body text-start">
+                <h5 class="card-title text-capitalize">{{ product.title }}</h5>
+                <p class="card-text">Posted: {{ product.publish }} by {{ product.seller.user }}</p>
+                <p class="card-text">
+                    <b>Short description: </b>
+                    {{ product.description|truncatewords:5 }}<br>
+                    <b>Seller: </b><i>{{ product.seller.user }}</i><br>
+                </p>
+            </div>
+            <div class="card-body text-end">
+                <a class="btn btn-outline-dark" href="{{ product.get_absolute_url }}">See more</a>
+            </div>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">Last updated {{ product.updated }}</small>
+        </div>
     </div>
 </div>
 {% empty %}
-    <p>There are no results for your request.</p>
+<p>There are no results for your request.</p>
 {% endfor %}
 <p>
-    <a href="{% url 'post_search' %}" class="button">Search again</a>
+    <a href="{% url 'post_search' %}" class="btn btn-outline-dark">Search again</a>
 </p>
+
 {% else %}
-    <h1>Search for products</h1>
-    <form class="search-form" action="." method="get" style="color: white;">
-        {{ form.as_p }}
-        <input type="submit" value="Search">
-    </form>
+<h1>Search for products</h1>
+<form class="search-form" action="." method="get" style="color: white;">
+    <div class="d-flex justify-content-center mb-3">
+        {{ form.query|as_crispy_field }}
+    </div>
+    <input class="btn btn-outline-dark" type="submit" value="Search">
+</form>
 {% endif %}
 
 {% endblock %}
