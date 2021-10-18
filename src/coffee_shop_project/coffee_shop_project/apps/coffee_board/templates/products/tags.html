@@ -6,14 +6,16 @@
 
 
 {% for tag in tags %}
-<div class="cardtrans">
-    <div class="cardmult">
-        <a href="{% url 'tagged' tag.slug  %}">{{ tag.name }}</a>
-        ({{ tag.count_tags }})
-    </div>
-</div>
+<a type="button" href="{% url 'tagged' tag.slug  %}" class="btn btn-primary position-relative m-2">
+    {{ tag.name }}
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        {{ tag.count_tags }}
+        <span class="visually-hidden">amount of tags</span>
+    </span>
+</a>
+
 {% empty %}
-    <h1>No tags</h1>
+<h1>No tags</h1>
 {% endfor %}
 
 {% endblock %}
