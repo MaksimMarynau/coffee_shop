@@ -46,11 +46,21 @@ class UserUpdateForm(forms.ModelForm):
             'email',
         )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].label = False
+
 
 class SellerForm(forms.ModelForm):
     class Meta:
         model = Seller
         fields = ('address',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].label = False
 
 
 class ProductForm(forms.ModelForm):
