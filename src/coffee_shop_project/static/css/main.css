@@ -181,6 +181,11 @@ body {
     border-radius: 0px !important
 }
 
+.my_opacity_body {
+    background-color: rgba(200, 200, 200, 0.6);
+}
+
+
 #myBtn {
     display: none;
     position: fixed;

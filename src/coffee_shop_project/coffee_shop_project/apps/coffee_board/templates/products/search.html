@@ -6,8 +6,8 @@
 
 
 {% if query %}
-<h1>Products containing "<span class="text-success">{{ query }}</span>" </h1>
-<h3>
+<h1 class="my_opacity_body">Products containing "<span class="text-success">{{ query }}</span>" </h1>
+<h3 class="text-white">
     {% with results.count as total_results %}
     Found {{ total_results }} result{{ total_results|pluralize}}
     {% endwith %}
@@ -35,19 +35,19 @@
     </div>
 </div>
 {% empty %}
-<p>There are no results for your request.</p>
+<p class="text-white">There are no results for your request.</p>
 {% endfor %}
 <p>
-    <a href="{% url 'post_search' %}" class="btn btn-outline-dark">Search again</a>
+    <a href="{% url 'post_search' %}" class="btn btn-outline-light">Search again</a>
 </p>
 
 {% else %}
-<h1>Search for products</h1>
+<h1 class="text-white">Search for products</h1>
 <form class="search-form" action="." method="get" style="color: white;">
     <div class="d-flex justify-content-center mb-3">
         {{ form.query|as_crispy_field }}
     </div>
-    <input class="btn btn-outline-dark" type="submit" value="Search">
+    <input class="btn btn-outline-light" type="submit" value="Search">
 </form>
 {% endif %}
 

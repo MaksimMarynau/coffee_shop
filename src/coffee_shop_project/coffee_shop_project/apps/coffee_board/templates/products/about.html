@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="card bg-white text-dark m-2 py-4 text-center">
+<div class="card text-dark m-2 py-4 text-center my_opacity_body">
     <div class="card-body">
         <h1>Information about us</h1>
         <p class="lead">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
@@ -14,7 +14,7 @@
 
     <div class="row gx-4 gx-lg-5 align-items-center my-5">
         <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0" src="https://static.dw.com/image/15690614_303.jpg" alt="..." /></div>
-        <div class="col-lg-5">
+        <div class="col-lg-5 my_opacity_body">
             <h1 class="font-weight-light">Business Name or Tagline</h1>
             <p class="text-start">This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!This is a
                 template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!This is a template
@@ -23,13 +23,13 @@
         </div>
     </div>
 
-    <div class="card text-white bg-secondary my-2 py-4 text-center">
+    <div class="card text-white my_opacity_body my-2 py-4 text-center">
         <div class="card-body">
             <h3 class="text-white m-0">Interesting title about something</h3>
         </div>
     </div>
     <div class="row">
-        <div class="card m-2 col">
+        <div class="card m-2 col my_opacity_body">
             <p>
                 {{ flatpage.content|linebreaks }}
             </p>

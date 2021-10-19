@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="container mt-5 mb-5">
-    <div class="card border-0">
+    <div class="card border-0 my_opacity_body">
         <div class="row g-0">
             <div class="col-md-6 border-end">
                 <div class="d-flex flex-column justify-content-center">
@@ -64,7 +64,7 @@
                             {% endif %}
                         </dd>
                     </dl>
-                    <p class="text-end text-muted m-0 p-0">
+                    <p class="text-end text-dark m-0 p-0">
                         <b>Posted:</b> {{ product.publish }}
                     </p>
                 </div>
@@ -73,7 +73,7 @@
     </div>
 </div>
 <div class="container mt-5 mb-5">
-    <div class="card border-0">
+    <div class="card border-0 my_opacity_body">
         <div class="row g-0">
             <h2>Comments: </h2>
             <hr />
@@ -98,7 +98,7 @@
             <div style="display:inline-block;">
                 <form action="{% url 'product_detail' product.slug %}" method="post">
                     <h2>Add a comment:</h2>
-                    <div class="mb-3">
+                    <div class="mb-3 ">
                     {% csrf_token %}
                     {{ form.body }}
                     </div>

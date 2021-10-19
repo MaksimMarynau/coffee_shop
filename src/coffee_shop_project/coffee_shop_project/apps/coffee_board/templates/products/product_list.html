@@ -5,7 +5,7 @@
 {% block content %}
 
 {% for product in my_products %}
-<div class="card mb-4">
+<div class="card mb-4 my_opacity_body">
     <div class="row g-0">
         <div class="col-md-4">
             <a href="{{ product.get_absolute_url }}">
@@ -20,7 +20,7 @@
             <div class="card-body">
                 <h5 class="card-title text-capitalize">{{ product.title }}</h5>
                 <p class="card-text">Posted: {{ product.publish }} by {{ product.seller.user }}</p>
-                <p class="card-text"><small class="text-muted">
+                <p class="card-text"><small class="text-dark">
                         Tags:
                         {% for tag in product.tags.all %}
                         <a href="{% url 'tagged' tag.slug %}">{{ tag.name }}</a>
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="card-footer m-0 p-0">
-            <small class="text-muted">Last updated {{ product.updated }}</small>
+            <small class="text-dark">Last updated {{ product.updated }}</small>
         </div>
     </div>
 </div>

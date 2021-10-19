@@ -5,7 +5,7 @@ Your shopping cart
 {% endblock %}
 
 {% block content %}
-<div class="card border-0">
+<div class="card border-0 my_opacity_body">
     <div class="d-flex justify-content-between">
         <div class="d-flex justify-content-start align-items-start p-3">
             <a class="btn btn-outline-primary" href="{% url 'product_list' %}" class="text-uppercase text-decoration-none">Continue shopping</a>
@@ -66,8 +66,8 @@ Your shopping cart
         </tfoot>
     </table>
     <div class="h4 pt-3"> <span class="fas fa-shield-alt text-primary pr-2"></span> Security of your shopping</div>
-    <p class="text-muted">Need help with an order?</p>
-    <p class="text-muted"><a href="#" class="text-danger">Hotline:</a>+314440160 (International)</p>
+    <p class="text-dark">Need help with an order?</p>
+    <p class="text-dark"><a href="#" class="text-danger">Hotline:</a>+314440160 (International)</p>
 </div>
 
 {% endblock %}

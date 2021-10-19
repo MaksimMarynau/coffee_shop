@@ -1,17 +1,17 @@
 {% load custom_tags %}
-<div class="col-sm-3 sidenav my-3 p-4 bg-white">
+<div class="col-sm-3 sidenav my-3 p-4 my_opacity_body">
     <h4>My blog</h4>
-    <p class="text-sm-start">There are {% total_posts %} products available.</p>
+    <p class="text-sm-start" >There are {% total_posts %} products available.</p>
     <h3 class="text-sm-start">Latest added products</h3>
     {% show_latest_posts 3 %}
     <h3 class="text-sm-start">Most commented posts</h3>
     {% get_most_commented_posts as most_commented_posts %}
     {% for product in most_commented_posts %}
-    <div class="card border-0">
+    <div class="card border-0 " style="background-color: rgba(245, 245, 245, 0);">
         <a class="btn btn-outline-dark m-1" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
     </div>
     {% endfor %}
-    <div class="card border-0">
+    <div class="card border-0 " style="background-color: rgba(245, 245, 245, 0);">
         {% with total_items=cart|length %}
         {% if total_items > 0 %}
         <a class="btn btn-outline-success d-flex justify-content-between" href="{% url 'cart_detail' %}">

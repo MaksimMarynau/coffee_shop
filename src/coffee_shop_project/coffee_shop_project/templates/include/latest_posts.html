@@ -1,5 +1,5 @@
 {% for product in latest_posts %}
-<div class="card border-0">
+<div class="card border-0" style="background-color: rgba(245, 245, 245, 0);">
     <a class="btn btn-outline-dark m-1" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
 </div>
 {% endfor %}
