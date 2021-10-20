@@ -37,6 +37,9 @@ class RegistrationForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
+
+    username = forms.CharField()
+
     class Meta:
         model = get_user_model()
         fields = (
@@ -45,6 +48,7 @@ class UserUpdateForm(forms.ModelForm):
             'last_name',
             'email',
         )
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

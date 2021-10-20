@@ -1,21 +1,53 @@
 {% extends "account/base.html" %}
-
+{% load crispy_forms_tags %}
 {% load i18n %}
 
 {% block title %}{% trans "Add product" %}{% endblock %}
 
 {% block content %}
-<div class="transparent1">
-    <div class="card">
-        <h1>{% trans "Add product" %}</h1>
-        <form method="post" action="{% url 'add_product' %}"
-        enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ product_form.as_p }}
-          {{ formset.as_p }}
-          <button type="submit">{% trans 'Add product' %}</button>
-        </form>
-    </div>
+
+<div class="card my-2 mx-4 my_opacity_body">
+    <h1>{% trans "Add product" %}</h1>
+    <form method="post" action="{% url 'add_product' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.title|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.price|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.description|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.country|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.tags|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.image|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ formset|crispy }}
+            </div>
+        </div>
+        <button class="btn btn-outline-success mb-4" type="submit">{% trans 'Add product' %}</button>
+    </form>
 </div>
+
 
 {% endblock %}

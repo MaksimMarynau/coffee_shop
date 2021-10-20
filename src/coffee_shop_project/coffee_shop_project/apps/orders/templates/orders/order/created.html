@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 
 {% block title %}
-  Thank you
+Thank you
 {% endblock %}
 
 {% block content %}
-<div class="transparent1">
-    <div class="card">
-        <h1>Thank you</h1>
-        <p>Your order has been successfully completed. Your order number is
-        <strong>{{ order.id }}</strong>.</p>
-    </div>
+
+<div class="card my_opacity_body mt-2 mx-4">
+    <h1>Thank you</h1>
+    <p>Your order has been successfully completed. Your order number is
+        <strong>{{ order.id }}</strong>.
+    </p>
 </div>
+
 
 {% endblock %}

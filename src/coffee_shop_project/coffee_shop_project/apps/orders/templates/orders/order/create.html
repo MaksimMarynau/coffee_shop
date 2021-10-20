@@ -5,36 +5,33 @@ Checkout
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="card border-0 my-3 my_opacity_body">
-            <h3>Checkout</h3>
-        </div>
-        <div class="card border-0 my-3 my_opacity_body">
-            <div class="col-sm">
-                <form method="post" class="text-start">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <p><button type="submit" class="btn btn-outline-primary mt-2">Place order</button></p>
-                </form>
-            </div>
-        </div>
-        <div class="card border-0 my-3 my_opacity_body">
-            <div class="col-sm">
-                <h3>Your order</h3>
-                <ul class="list-group text-sm-start">
-                    {% for item in cart %}
-                    <li class="list-group-item d-flex justify-content-between align-items-start ">
-                        <div>
-                            {{ item.quantity }} x <a class="text-decoration-none " href="{{ item.product.get_absolute_url }}">{{ item.product.title }}</a>
-                        </div>
-                        <span class="badge bg-primary rounded-pill">${{ item.total_price }}</span>
-                    </li>
-                    {% endfor %}
-                </ul>
-                <p class="text-end m-2">Total: ${{ cart.get_total_price }}</p>
-            </div>
-        </div>
+<div class="card mt-2 mb-4 mx-4 border-0 my_opacity_body">
+    <h3>Checkout</h3>
+</div>
+<div class="card border-0 my-2 mb-4 mx-4 my_opacity_body">
+    <div class="col-sm">
+        <form method="post" class="text-start">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <p><button type="submit" class="btn btn-outline-primary mt-2">Place order</button></p>
+        </form>
     </div>
 </div>
+<div class="card border-0 mt-2 mb-4 mx-4 my_opacity_body">
+    <div class="col-sm">
+        <h3>Your order</h3>
+        <ul class="list-group text-sm-start">
+            {% for item in cart %}
+            <li class="list-group-item d-flex justify-content-between align-items-start ">
+                <div>
+                    {{ item.quantity }} x <a class="text-decoration-none " href="{{ item.product.get_absolute_url }}">{{ item.product.title }}</a>
+                </div>
+                <span class="badge bg-primary rounded-pill">${{ item.total_price }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        <p class="text-end m-2">Total: ${{ cart.get_total_price }}</p>
+    </div>
+</div>
+
 {% endblock %}
