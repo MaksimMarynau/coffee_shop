@@ -2,7 +2,7 @@
 <div class="pagination">
     {% if page_obj %}
     <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center mx-4">
         {% if page_obj.has_previous %}
         <li class="page-item">
             <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><i class="fas fa-caret-square-left fa-lg"></i></a>

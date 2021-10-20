@@ -4,7 +4,7 @@
 {% block title %}{{ product.title }}{% endblock %}
 
 {% block content %}
-<div class="container mt-5 mb-5">
+<div class="container mt-2 mb-5">
     <div class="card border-0 my_opacity_body">
         <div class="row g-0">
             <div class="col-md-6 border-end">
@@ -41,14 +41,13 @@
                     <h3>${{ product.price }}</h3>
                     <form action="{% url 'cart_add' product.id %}" method="post">
                         {% csrf_token %}
-                        <div class="mt-5">
-                            <label>Quantity:</label>
-                            {{ cart_product_form.quantity }}
+                        <div class="m-3 d-flex justify-content-center">
+                                {{ cart_product_form.quantity|as_crispy_field }}
                         </div>
                         <input class="btn btn-dark" type="submit" value="Add to cart">
                     </form>
                     <dl class="row my-5">
-                        <dt class="col-sm-4 mb-3 text-start">Shipping from:</dt>
+                        <dt class="col-sm-4 mb-3 text-start">Producer:</dt>
                         <dd class="col-sm-8 mb-3 text-end">{{ product.country }}</dd>
                         <dt class="col-sm-4 mb-3 text-start">Seller is:</dt>
                         <dd class="col-sm-8 mb-3 text-end">
@@ -99,8 +98,8 @@
                 <form action="{% url 'product_detail' product.slug %}" method="post">
                     <h2>Add a comment:</h2>
                     <div class="mb-3 ">
-                    {% csrf_token %}
-                    {{ form.body }}
+                        {% csrf_token %}
+                        {{ form.body }}
                     </div>
                     <input type="submit" value="Add comment" class="btn btn-outline-dark mb-4">
                 </form>

@@ -5,12 +5,12 @@
 {% block content %}
 
 {% for product in my_products %}
-<div class="card mb-4 my_opacity_body">
+<div class="card mt-2 mb-4 mx-4 my_opacity_body">
     <div class="row g-0">
         <div class="col-md-4">
             <a href="{{ product.get_absolute_url }}">
             {% if product.image %}
-            <img src="{{ product.image.url }}" class="img-fluid rounded-start">
+            <img src="{{ product.image.url }}" class="img-fluid h-100 rounded-start">
             {% else %}
             <img src="media/products/no-image.jpg" class="img-fluid rounded-start">
             {% endif %}

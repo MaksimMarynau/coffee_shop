@@ -72,6 +72,7 @@ class ProductDetailView(DetailView):
     def get(self, request, slug):
         form = CommentForm()
         cart_product_form = CartAddProductForm()
+        print(cart_product_form)
         filter = Product.objects.filter(available=True)
         product = get_object_or_404(filter, slug=slug)
         return render(request, 'products/product_detail.html',

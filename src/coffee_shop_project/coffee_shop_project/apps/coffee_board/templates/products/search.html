@@ -6,14 +6,14 @@
 
 
 {% if query %}
-<h1 class="my_opacity_body">Products containing "<span class="text-success">{{ query }}</span>" </h1>
+<h1 class="my_opacity_body mt-2">Products containing "<span class="text-success">{{ query }}</span>" </h1>
 <h3 class="text-white">
     {% with results.count as total_results %}
     Found {{ total_results }} result{{ total_results|pluralize}}
     {% endwith %}
 </h3>
 {% for product in results %}
-<div class="card mb-4">
+<div class="card mb-4 my_opacity_body">
     <div class="row g-0">
         <div class="col-md d-flex justify-content-between align-items-end">
             <div class="card-body text-start">
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <small class="text-muted">Last updated {{ product.updated }}</small>
+            <small class="text-dark">Last updated {{ product.updated }}</small>
         </div>
     </div>
 </div>
