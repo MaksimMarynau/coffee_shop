@@ -1,25 +1,61 @@
 {% extends "account/base.html" %}
-
+{% load crispy_forms_tags %}
 {% load i18n %}
 
 {% block head_title %}{% trans "Add some information" %}{% endblock %}
 
 {% block content %}
-<div class="transparent1">
-    <div class="card">
-        {% if product %}
-            <h1>{% trans "Add some information" %} to product: {{ product.title }}</h1>
-            <form method="post" action="{% url 'update_product' product.slug %}"
-            enctype="multipart/form-data">
-              {% csrf_token %}
-              {{ product_form.as_p }}
-              {{ formset.as_p }}
-              <button type="submit">{% trans 'Save' %}</button>
-            </form>
-        {% else %}
-        <h2>{{ exception }}</h2>
-        {% endif %}
-    </div>
+<div class="card mt-2 mx-4 mb-2 my_opacity_body">
+    {% if product %}
+    <h1>{% trans "Add some information" %} to product: {{ product.title }}</h1>
+    <form method="post" action="{% url 'update_product' product.slug %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% csrf_token %}
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.title|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.price|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.description|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.country|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.tags|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.available|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ product_form.image|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row my-2 d-flex justify-content-center">
+            <div class="col-sm-8">
+                {{ formset|crispy }}
+            </div>
+        </div>
+        <button class="btn btn-outline-success mb-4" type="submit">{% trans 'Save' %}</button>
+    </form>
+    {% else %}
+    <h2>{{ exception }}</h2>
+    {% endif %}
 </div>
 
 {% endblock %}

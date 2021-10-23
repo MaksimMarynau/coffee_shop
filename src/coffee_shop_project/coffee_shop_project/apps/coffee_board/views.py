@@ -8,7 +8,7 @@ from django.contrib.postgres.search import TrigramSimilarity
 from django.db.models import Count
 from django.db.models.functions import Greatest
 from taggit.models import Tag
-
+from django.db.models import Q
 import re
 
 from .models import Product, Comment, Seller
@@ -90,13 +90,17 @@ def post_search(request):
         form = SearchForm(request.GET)
     if form.is_valid():
         query = form.cleaned_data['query']
-        results = Product.objects.annotate(
-            similarity=Greatest(
-            TrigramSimilarity('title',query),
-            TrigramSimilarity('seller__user__username',query),
-            TrigramSimilarity('description',query),
-            )
-        ).filter(similarity__gte=0.2).order_by('-similarity')
+        #Search for SQLite
+        results = Product.objects.filter(
+            Q(title__contains=query) | Q(seller__user__username__contains=query) | Q(description__contains=query))
+        #Search for PostgreSQL only
+        # results = Product.objects.annotate(
+        #     similarity=Greatest(
+        #     TrigramSimilarity('title',query),
+        #     TrigramSimilarity('seller__user__username',query),
+        #     TrigramSimilarity('description',query),
+        #     )
+        # ).filter(similarity__gte=0.2).order_by('-similarity')
     return render(request, 'products/search.html',
             {'form': form,
             'query': query,
