@@ -39,7 +39,7 @@
             </div>
             <div class="card-body">
                 <a href="{% url 'update_product' product.slug %}" class="btn btn-outline-success">Update</a>
-                <a href="{% url 'cancel_product' product.slug %}" class="btn btn-outline-warning">Cancel</a>
+                <a href="{% url 'delete_product' product.slug %}" class="btn btn-outline-danger">Delete</a>
             </div>
         </div>
     </div>
@@ -79,7 +79,6 @@
             {% endif %}
         </ul>
     </nav>
-
     {% endif %}
 </div>
 

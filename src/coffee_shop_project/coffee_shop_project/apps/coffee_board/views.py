@@ -72,7 +72,6 @@ class ProductDetailView(DetailView):
     def get(self, request, slug):
         form = CommentForm()
         cart_product_form = CartAddProductForm()
-        print(cart_product_form)
         filter = Product.objects.filter(available=True)
         product = get_object_or_404(filter, slug=slug)
         return render(request, 'products/product_detail.html',
@@ -114,9 +113,9 @@ def tagsView(request):
 @login_required
 def user_products(request):
     if request.user.is_staff:
-        product_list = Product.objects.all()
+        product_list = Product.objects.filter(available=True).order_by('-available','title')
     else:
-        product_list = Product.objects.filter(seller=request.user.sellers)
+        product_list = Product.objects.filter(seller=request.user.sellers, available=True).order_by('-available','title')
     page = request.GET.get('page', 1)
 
     paginator = Paginator(product_list, 2)
@@ -130,6 +129,29 @@ def user_products(request):
     return render(
         request,
         'account/user_products.html',
+        {'products':products}
+    )
+
+
+@login_required
+def user_canceled_products(request):
+    if request.user.is_staff:
+        product_list = Product.objects.filter(available=False).order_by('title')
+    else:
+        product_list = Product.objects.filter(seller=request.user.sellers, available=False).order_by('title')
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(product_list, 2)
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+
+    return render(
+        request,
+        'account/user_canceled_products.html',
         {'products':products}
     )
 
@@ -200,7 +222,7 @@ def update_product(request,slug=None):
                 formset = AIFormSet(request.POST, request.FILES, instance=product)
                 if formset.is_valid():
                     formset.save()
-                    return redirect(product.get_absolute_url())
+                    return redirect('user_products')
         else:
             product_form = ProductForm(instance=product)
             formset = AIFormSet(instance=product)
@@ -212,7 +234,7 @@ def update_product(request,slug=None):
 
 
 @login_required
-def delete_product(request,slug=None):
+def cancel_product(request,slug=None):
     if request.user.is_staff:
         product = get_object_or_404(
             Product,
@@ -233,6 +255,30 @@ def delete_product(request,slug=None):
                 ntag=Count('taggit_taggeditem_items')
             ).filter(ntag=0)
         tag.delete()
-        return redirect('/')
+        return redirect('user_products')
+
+    return render(request, 'account/cancel_product.html', {'product':product})
+
+
+@login_required
+def delete_product(request,slug=None):
+    if request.user.is_staff:
+        product = get_object_or_404(
+            Product,
+            slug=slug,
+        )
+    else:
+        product = get_object_or_404(
+            Product,
+            slug=slug,
+            seller=request.user.sellers
+        )
+    if request.method == 'POST':
+        product.delete()
+        tag = Tag.objects.annotate(
+                ntag=Count('taggit_taggeditem_items')
+            ).filter(ntag=0)
+        tag.delete()
+        return redirect('user_canceled_products')
 
     return render(request, 'account/delete_product.html', {'product':product})

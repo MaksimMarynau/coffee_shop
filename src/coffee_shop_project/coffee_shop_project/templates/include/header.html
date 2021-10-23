@@ -38,8 +38,10 @@
                         <li><a class="dropdown-item" href="{% url 'add_product' %}">Add product </a></li>
                         {% if user.is_staff %}
                         <li><a class="dropdown-item" href="{% url 'user_products' %}">All products </a></li>
+                        <li><a class="dropdown-item" href="{% url 'user_canceled_products' %}">All canceled products </a></li>
                         {% else %}
                         <li><a class="dropdown-item" href="{% url 'user_products' %}">Your products </a></li>
+                        <li><a class="dropdown-item" href="{% url 'user_canceled_products' %}">Your canceled products </a></li>
                         {% endif %}
                         <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign out </a></li>
                     </ul>

@@ -1,5 +1,4 @@
 {% load static %}
-<div class="pagination">
     {% if page_obj %}
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center mx-4">
@@ -31,7 +30,9 @@
 
     {% else %}
 
-    <h1>No products</h1>
+    <div class="card mt-2 mx-4 my_opacity_body">
+        <h1>No products</h1>
+    </div>
 
     {% endif %}
 </div>

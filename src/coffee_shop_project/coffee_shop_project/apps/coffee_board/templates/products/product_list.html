@@ -4,42 +4,45 @@
 
 {% block content %}
 
+{% if my_products %}
 {% for product in my_products %}
-<div class="card mt-2 mb-4 mx-4 my_opacity_body">
-    <div class="row g-0">
-        <div class="col-md-4">
-            <a href="{{ product.get_absolute_url }}">
-            {% if product.image %}
-            <img src="{{ product.image.url }}" class="img-fluid h-100 rounded-start">
-            {% else %}
-            <img src="media/products/no-image.jpg" class="img-fluid rounded-start">
-            {% endif %}
-            </a>
-        </div>
-        <div class="col-md-8 d-flex align-items-center">
-            <div class="card-body">
-                <h5 class="card-title text-capitalize">{{ product.title }}</h5>
-                <p class="card-text">Posted: {{ product.publish }} by {{ product.seller.user }}</p>
-                <p class="card-text"><small class="text-dark">
-                        Tags:
-                        {% for tag in product.tags.all %}
-                        <a href="{% url 'tagged' tag.slug %}">{{ tag.name }}</a>
-                        {% empty %}
-                        No tags
-                        {% endfor %}
-                    </small></p>
+<div class="container mt-2 mb-5 mx-4">
+    <div class="card border-0 my_opacity_body">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <a href="{{ product.get_absolute_url }}">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" class="img-fluid h-100 rounded-start">
+                    {% else %}
+                    <img src="media/products/no-image.jpg" class="img-fluid rounded-start">
+                    {% endif %}
+                </a>
+            </div>
+            <div class="col-md-8 d-flex align-items-center">
                 <div class="card-body">
-                    <a class="btn btn-outline-primary" href="{{ product.get_absolute_url }}">See detail</a>
+                    <h5 class="card-title text-capitalize">{{ product.title }}</h5>
+                    <p class="card-text">Posted: {{ product.publish }} by {{ product.seller.user }}</p>
+                    <p class="card-text"><small class="text-dark">
+                            Tags:
+                            {% for tag in product.tags.all %}
+                            <a href="{% url 'tagged' tag.slug %}">{{ tag.name }}</a>
+                            {% empty %}
+                            No tags
+                            {% endfor %}
+                        </small></p>
+                    <div class="card-body">
+                        <a class="btn btn-outline-primary" href="{{ product.get_absolute_url }}">See detail</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card-footer m-0 p-0">
-            <small class="text-dark">Last updated {{ product.updated }}</small>
+            <div class="card-footer m-0 p-0">
+                <small class="text-dark">Last updated {{ product.updated }}</small>
+            </div>
         </div>
     </div>
 </div>
 
 {% endfor %}
-
+{% endif %}
 {% include "include/pagination.html" with page=page_obj %}
 {% endblock %}

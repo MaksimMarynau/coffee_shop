@@ -9,10 +9,10 @@ Checkout
     <h3>Checkout</h3>
 </div>
 <div class="card border-0 my-2 mb-4 mx-4 my_opacity_body">
-    <div class="col-sm">
+    <div class="col-sm-auto d-flex justify-content-center ">
         <form method="post" class="text-start">
             {% csrf_token %}
-            {{ form|crispy }}
+                {{ form|crispy }}
             <p><button type="submit" class="btn btn-outline-primary mt-2">Place order</button></p>
         </form>
     </div>

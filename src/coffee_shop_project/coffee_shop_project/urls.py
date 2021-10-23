@@ -31,11 +31,16 @@ urlpatterns = [
         views.update_product,
         name='update_product'
     ),
+    path('accounts/cancel_product/<slug:slug>/',
+        views.cancel_product,
+        name='cancel_product'
+    ),
     path('accounts/delete_product/<slug:slug>/',
         views.delete_product,
         name='delete_product'
     ),
     path('accounts/user_products', views.user_products, name='user_products'),
+    path('accounts/user_canceled_products', views.user_canceled_products, name='user_canceled_products'),
     path('about/', fp_views.flatpage, {'url': '/about/'}, name='about'),
     path('contact/', fp_views.flatpage, {'url': '/contact/'}, name='contact'),
     path('cart/', include('cart.urls')),

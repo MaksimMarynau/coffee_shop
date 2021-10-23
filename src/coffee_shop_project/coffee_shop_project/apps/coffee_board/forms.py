@@ -77,6 +77,7 @@ class ProductForm(forms.ModelForm):
             'country',
             'image',
             'tags',
+            'available'
         )
         labels = {
             "title": _("Product title"),
