@@ -5,15 +5,15 @@
 {% block title %}{% trans "Delete " %}{{ product.title }}{% endblock %}
 
 {% block content %}
-    <div class="card mt-2 mx-4 p-4 my_opacity_body">
-        <form method="POST">
+<div class="card mt-2 mx-4 p-4 my_opacity_body">
+    <form method="POST">
         {% csrf_token %}
         <p>
             Are you sure to delete item <b>{{ product.title }}</b> ?
         </p>
         <input class="btn btn-danger" type="submit" value="Yes" />
         <a class="btn btn-dark" href="{% url 'user_canceled_products' %}">Cancel</a>
-        </form>
-    </div>
+    </form>
+</div>
 
 {% endblock %}

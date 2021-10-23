@@ -8,8 +8,7 @@
 <h1>{% trans "Verify Your E-mail Address" %}</h1>
 
 {% url 'account_email' as email_url %}
-<div class="transparent1">
-    <div class="card">
+<div class="card mt-2 mb-3 mx-4 p-4 my_opacity_body">
         <p>{% blocktrans %}This part of the site requires us to verify that
         you are who you claim to be. For this purpose, we require that you
         verify ownership of your e-mail address. {% endblocktrans %}</p>
@@ -19,7 +18,6 @@
         contact us if you do not receive it within a few minutes.{% endblocktrans %}</p>
 
         <p>{% blocktrans %}<strong>Note:</strong> you can still <a href="{{ email_url }}">change your e-mail address</a>.{% endblocktrans %}</p>
-    </div>
 </div>
 
 {% endblock %}
