@@ -100,7 +100,9 @@ class ProductForm(forms.ModelForm):
 AIFormSet = forms.inlineformset_factory(
     Product,
     ProductImages,
-    fields='__all__'
+    fields='__all__',
+    max_num=4,
+    extra=4,
 )
 
 
