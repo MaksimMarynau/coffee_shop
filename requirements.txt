@@ -6,8 +6,7 @@ cryptography==3.4.7
 defusedxml==0.7.1
 Django==3.1.7
 django-allauth==0.44.0
-django-phone-field==1.8.1
-django-phonenumber-field==5.1.0
+django-crispy-forms==1.13.0
 django-taggit==1.4.0
 idna==2.10
 oauthlib==3.1.0
