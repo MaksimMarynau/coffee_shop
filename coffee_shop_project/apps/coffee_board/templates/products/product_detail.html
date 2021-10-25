@@ -42,7 +42,7 @@
                     <form action="{% url 'cart_add' product.id %}" method="post">
                         {% csrf_token %}
                         <div class="m-3 d-flex justify-content-center">
-                                {{ cart_product_form.quantity|as_crispy_field }}
+                            {{ cart_product_form.quantity|as_crispy_field }}
                         </div>
                         <input class="btn btn-dark" type="submit" value="Add to cart">
                     </form>
@@ -94,13 +94,19 @@
             {% endfor %}
 
             <br />
-            <div style="display:inline-block;">
+            <div class="d-flex justify-content-center" style="display:inline-block;">
                 <form action="{% url 'product_detail' product.slug %}" method="post">
                     <h2>Add a comment:</h2>
+                    {% csrf_token %}
+                    {% if user.is_authenticated %}
                     <div class="mb-3 ">
-                        {% csrf_token %}
-                        {{ form.body }}
+                        {{ form.body|as_crispy_field }}
                     </div>
+                    {% else %}
+                    <div class="mb-3">
+                        {{ form|crispy }}
+                    </div>
+                    {% endif %}
                     <input type="submit" value="Add comment" class="btn btn-outline-dark mb-4">
                 </form>
             </div>

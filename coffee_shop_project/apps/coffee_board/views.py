@@ -14,6 +14,7 @@ import re
 from .models import Product, Comment, Seller
 from .forms import (
     CommentForm,
+    CommentFormAuthenticated,
     RegistrationForm,
     SellerForm,
     ProductForm,
@@ -50,7 +51,6 @@ class ProtectedView(TemplateView):
         return super().dispatch(*args, **kwargs)
 
 
-@method_decorator(login_required, name='dispatch')
 class ProductDetailView(DetailView):
     login_required = True
     model = Product
@@ -61,12 +61,22 @@ class ProductDetailView(DetailView):
         form = CommentForm(request.POST)
         filter = Product.objects.filter(available=True)
         product = get_object_or_404(filter, slug=slug)
-        if form.is_valid():
-            new_comment = form.save(commit=False)
-            new_comment.name = self.request.user
-            new_comment.email = self.request.user.email
-            new_comment.product = product
-            new_comment.save()
+        if request.user.is_authenticated:
+            form = CommentFormAuthenticated(request.POST)
+            print(f'{request.user} is_authenticated')
+            if form.is_valid():
+                print(f'{request.user} form valid')
+                new_comment = form.save(commit=False)
+                new_comment.name = self.request.user
+                new_comment.email = self.request.user.email
+                new_comment.product = product
+                new_comment.save()
+        else:
+            print(f'{request.user} else')
+            if form.is_valid():
+                new_comment = form.save(commit=False)
+                new_comment.product = product
+                new_comment.save()
         return redirect(product.get_absolute_url())
 
     def get(self, request, slug):
