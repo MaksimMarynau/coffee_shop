@@ -10,7 +10,7 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 
-<body class="bg-image" style="background-image: url('{% static 'bg/back5.jpg' %}'); height: 100%; background-repeat: no-repeat;background-position: center; background-size: cover;">
+<body class="bg-image d-flex flex-column min-vh-100" style="background-image: url('{% static 'bg/back5.jpg' %}'); height: 100%; background-repeat: no-repeat;background-position: center; background-size: cover; ">
 
     <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 
@@ -28,10 +28,9 @@
 
             {% include "include/rightbar.html" %}
 
-
-            {% include "include/footer.html" %}
         </div>
     </div>
+    {% include "include/footer.html" %}
     <script src="{% static "js/script.js" %}"></script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
