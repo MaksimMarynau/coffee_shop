@@ -16,49 +16,56 @@ Your shopping cart
             {% endif %}
         </div>
     </div>
-    <div class="row">
-        {% for item in cart %}
-        {% with product=item.product %}
-        <div class="col">
-            <a href="{{ product.get_absolute_url }}">
-                <img alt="image" width="80" height="80" src="{{ product.image.url }}">
-            </a>
-        </div>
-        <div class="col">
-            {{ product.title }}
-        </div>
-        <div class="col">
-            <form action="{% url 'cart_add' product.id %}" method="post">
-                {{ item.update_quantity_form.quantity }}
-                {{ item.update_quantity_form.override }}
-                <input class="btn btn-primary" type="submit" value="Update">
-                {% csrf_token %}
-            </form>
-        </div>
-        <div class="col">
-            <form action="{% url 'cart_remove' product.id %}" method="post">
-                <input class="btn btn-outline-danger" type="submit" value="Remove">
-                {% csrf_token %}
-            </form>
-        </div>
-        <div class="col">
-            Unit price:
-            ${{ item.price }}
-        </div>
-        <div class="col">
-            Price:
-            ${{ item.total_price }}
-        </div>
-    </div>
-    {% endwith %}
-    {% endfor %}
-    <div class="d-flex justify-content-between my_opacity_body">
-        <div class="align-items-start p-3">
-            Total:
-        </div>
-        <div class="align-items-end p-3">
-            ${{ cart.get_total_price }}
-        </div>
+    <div class="table-responsive">
+        <table class="m-auto table table-striped table-hover  table-responsive ">
+            <thead>
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Remove</th>
+                    <th scope="col">Unit price</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                {% with product=item.product %}
+                <tr>
+                    <td>
+                        <a href="{{ product.get_absolute_url }}">
+                            <img alt="image" width="80" height="80" src="{{ product.image.url }}">
+                        </a>
+                    </td>
+                    <td>{{ product.title }}</td>
+                    <td>
+                        <form action="{% url 'cart_add' product.id %}" method="post">
+                            {{ item.update_quantity_form.quantity }}
+                            {{ item.update_quantity_form.override }}
+                            <input class="btn btn-primary" type="submit" value="Update">
+                            {% csrf_token %}
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{% url 'cart_remove' product.id %}" method="post">
+                            <input class="btn btn-outline-danger" type="submit" value="Remove">
+                            {% csrf_token %}
+                        </form>
+                    </td>
+                    <td class="num">${{ item.price }}</td>
+                    <td class="num">${{ item.total_price }}</td>
+                </tr>
+                {% endwith %}
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr class="total">
+                    <td>Total</td>
+                    <td colspan="4"></td>
+                    <td class="num">${{ cart.get_total_price }}</td>
+                </tr>
+            </tfoot>
+        </table>
     </div>
 
     <div class="h4 pt-3"> <span class="fas fa-shield-alt text-primary pr-2"></span> Security of your shopping</div>

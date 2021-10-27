@@ -197,6 +197,7 @@ def add_product(request):
             product = product_form.save(commit=False)
             product.seller = request.user.sellers
             product.slug = '_'.join(re.findall(r'\w+',product.title)).lower()
+            product.available = True
             product.save()
             product_form.save_m2m()
             formset = AIFormSet(request.POST, request.FILES, instance=product)
