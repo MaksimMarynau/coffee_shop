@@ -33,7 +33,7 @@
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         Hello, {{ user.username }}
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="{% url 'update_profile' %}">Update profile </a></li>
                         <li><a class="dropdown-item" href="{% url 'add_product' %}">Add product </a></li>
                         {% if user.is_staff %}
